@@ -1,63 +1,100 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id("com.android.application")
+    id("com.google.dagger.hilt.android")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
-    namespace 'com.syrjakojyrjanai.reminderapp'
-    compileSdk 33
+    namespace = "com.syrjakojyrjanai.reminderapp"
+    compileSdk = sdk.compile
 
     defaultConfig {
-        applicationId "com.syrjakojyrjanai.reminderapp"
-        minSdk 28
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.syrjakojyrjanai.reminderapp"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdk = sdk.min
+        targetSdk = sdk.target
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
     buildFeatures {
-        compose true
+        compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0'
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.1'
-    implementation "androidx.compose.ui:ui:$compose_ui_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
-    implementation 'androidx.compose.material:material:1.2.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+    implementation(project(":core-domain"))
+    implementation(project(":core-database"))
+    implementation(project(":core-data"))
+
+    implementation(androidx.core.ktx)
+    implementation(androidx.compose.ui.ui)
+    implementation(androidx.compose.material.material)
+    implementation(androidx.compose.material.extended)
+    implementation(androidx.compose.ui.preview)
+    implementation(androidx.lifecycle.runtime)
+    implementation(androidx.lifecycle.compose)
+    implementation(androidx.navigation.compose)
+    implementation(androidx.activity.activity_compose)
+    implementation(androidx.constraintlayout.compose)
+
+    implementation(androidx.appcompat.app.appcompatactivity)
+    implementation(google.dagger.hilt.android)
+    kapt(google.dagger.hilt.compiler)
+
+    implementation(androidx.navigation.hilt.compose)
+
+    testImplementation(junit.junit)
+    androidTestImplementation(androidx.test.ext.junit)
+    androidTestImplementation(androidx.test.espresso.core)
+    androidTestImplementation(androidx.compose.ui.ui_test_junit)
+    debugImplementation(androidx.compose.ui.ui_tooling)
+    debugImplementation(androidx.compose.ui.ui_test_manifest)
+
+    implementation(google.accompanist.insets)
+    implementation(kotlinx.coroutines.android.android)
+    implementation(androidx.constraintlayout.compose)
+    implementation(androidx.compose.foundation.foundation)
+
+    implementation(androidx.work.runtime_ktx)
+    implementation(androidx.work.rxjava2)
+    implementation(androidx.work.gcm)
+    androidTestImplementation(androidx.work.testing)
+    implementation(androidx.work.multiprocess)
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
