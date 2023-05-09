@@ -9,7 +9,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -28,7 +27,7 @@ fun LandingScreen(
     navigationController: NavController
 ) {
 
-    Column (
+    Column(
         modifier = modifier.padding(20.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center,
@@ -41,7 +40,7 @@ fun LandingScreen(
             modifier = Modifier.align(CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(300.dp))
+        Spacer(modifier = Modifier.height(380.dp))
 
 
         Button(
@@ -50,12 +49,11 @@ fun LandingScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-            ,
+                .height(50.dp),
             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(217,217,217,255)),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(217, 217, 217, 255)),
         ) {
-            Text(stringResource(R.string.log_in))
+            Text(stringResource(R.string.login))
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -66,10 +64,9 @@ fun LandingScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-            ,
+                .height(50.dp),
             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(217,217,217,255)),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(217, 217, 217, 255)),
         ) {
             Text(stringResource(R.string.sign_up))
         }
@@ -77,17 +74,18 @@ fun LandingScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Column(
-            modifier = Modifier.height(50.dp).align(CenterHorizontally),
+            modifier = Modifier
+                .height(50.dp)
+                .align(CenterHorizontally),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = CenterHorizontally,
 
-        ) {
+            ) {
             SignInButton(
                 text = "Log In with Google",
-                icon = painterResource(id = R.drawable.ic_google_logo)
-            ) {
-
-            }
+                icon = painterResource(id = R.drawable.ic_google_logo),
+                onClick = { navigationController.navigate("home") }
+            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -96,7 +94,9 @@ fun LandingScreen(
             text = stringResource(R.string.skip),
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.clickable{navigationController.navigate("home")}.align(CenterHorizontally)
+            modifier = Modifier
+                .clickable { navigationController.navigate("home") }
+                .align(CenterHorizontally)
         )
     }
 }
@@ -113,44 +113,44 @@ fun SignInButton(
     progressIndicatorColor: Color = MaterialTheme.colors.primary,
     onClick: () -> Unit,
 ) {
-        Surface(
-            modifier = Modifier.clickable(
-                enabled = !isLoading,
-                onClick = onClick
-            ),
-            shape = shape,
-            border = BorderStroke(width = 1.dp, color = borderColor),
-            color = backgroundColor,
+    Surface(
+        modifier = Modifier.clickable(
+            enabled = !isLoading,
+            onClick = onClick
+        ),
+        shape = shape,
+        border = BorderStroke(width = 1.dp, color = borderColor),
+        color = backgroundColor,
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 12.dp,
+                    end = 16.dp,
+                    top = 12.dp,
+                    bottom = 12.dp
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
         ) {
-            Row(
-                modifier = Modifier
-                    .padding(
-                        start = 12.dp,
-                        end = 16.dp,
-                        top = 12.dp,
-                        bottom = 12.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Icon(
-                    painter = icon,
-                    contentDescription = "SignInButton",
-                    tint = Color.Unspecified
-                )
-                Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                painter = icon,
+                contentDescription = "SignInButton",
+                tint = Color.Unspecified
+            )
+            Spacer(modifier = Modifier.width(8.dp))
 
-                Text(text = if (isLoading) loadingText else text)
-                if (isLoading) {
-                    Spacer(modifier = Modifier.width(16.dp))
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .height(16.dp)
-                            .width(16.dp),
-                        strokeWidth = 2.dp,
-                        color = progressIndicatorColor
-                    )
-                }
+            Text(text = if (isLoading) loadingText else text)
+            if (isLoading) {
+                Spacer(modifier = Modifier.width(16.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .width(16.dp),
+                    strokeWidth = 2.dp,
+                    color = progressIndicatorColor
+                )
             }
         }
+    }
 }

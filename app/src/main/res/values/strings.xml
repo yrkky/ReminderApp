@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Muistuttaja</string>
-    <string name="log_in">Kirjaudu sisään</string>
+
     <string name="sign_up">Luo uusi käyttäjä</string>
+    <string name="create_new_account">Luo käyttäjä</string>
+    <string name="login">Kirjaudu sisään</string>
+    <string name="email">Sähköposti</string>
+    <string name="password">Salasana</string>
+    <string name="confirm_password">Salasana uudelleen</string>
+
     <string name="skip">Ohita</string>
+    <string name="back">Takaisin</string>
+
+    <string name="login_benefits">Kirjautumalla sisään, voit synkronoida tiedot usean laitteen välillä</string>
+    <string name="sign_up_benefits">Luomalla käyttäjätilin, voit synkronoida tiedot usean laitteen välillä</string>
 </resources>
