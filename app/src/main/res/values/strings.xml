@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Muistuttaja</string>
-    
+    <string name="log_in">Muistuttaja</string>
+    <string name="sign_up">Muistuttaja</string>
 </resources>

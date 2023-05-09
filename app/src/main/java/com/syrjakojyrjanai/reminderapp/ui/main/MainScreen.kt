@@ -20,7 +20,7 @@ import com.google.accompanist.insets.systemBarsPadding
 
 @Composable
 fun MainScreen(
-    navController: NavController,
+    navigationController: NavController,
     modifier: Modifier,
 ){
     Scaffold (
