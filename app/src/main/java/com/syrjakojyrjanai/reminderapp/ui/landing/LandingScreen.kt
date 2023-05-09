@@ -1,19 +1,20 @@
 package com.syrjakojyrjanai.reminderapp.ui.landing
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,9 +36,12 @@ fun LandingScreen(
 
         Text(
             text = stringResource(R.string.app_name),
-            fontSize = 30.sp,
+            fontSize = 50.sp,
             textAlign = TextAlign.Center,
+            modifier = Modifier.align(CenterHorizontally)
         )
+
+        Spacer(modifier = Modifier.height(300.dp))
 
 
         Button(
@@ -54,6 +58,8 @@ fun LandingScreen(
             Text(stringResource(R.string.log_in))
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+
         Button(
             onClick = {
                 navigationController.navigate("signup")
@@ -68,6 +74,83 @@ fun LandingScreen(
             Text(stringResource(R.string.sign_up))
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
 
+        Column(
+            modifier = Modifier.height(50.dp).align(CenterHorizontally),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
+            SignInButton(
+                text = "Log In with Google",
+                icon = painterResource(id = R.drawable.ic_google_logo)
+            ) {
+
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = stringResource(R.string.skip),
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.clickable{navigationController.navigate("home")}.align(CenterHorizontally)
+        )
     }
+}
+
+@Composable
+fun SignInButton(
+    text: String,
+    loadingText: String = "Signing in...",
+    icon: Painter,
+    isLoading: Boolean = false,
+    shape: Shape = RoundedCornerShape(4.dp),
+    borderColor: Color = Color.LightGray,
+    backgroundColor: Color = MaterialTheme.colors.surface,
+    progressIndicatorColor: Color = MaterialTheme.colors.primary,
+    onClick: () -> Unit,
+) {
+        Surface(
+            modifier = Modifier.clickable(
+                enabled = !isLoading,
+                onClick = onClick
+            ),
+            shape = shape,
+            border = BorderStroke(width = 1.dp, color = borderColor),
+            color = backgroundColor,
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(
+                        start = 12.dp,
+                        end = 16.dp,
+                        top = 12.dp,
+                        bottom = 12.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Icon(
+                    painter = icon,
+                    contentDescription = "SignInButton",
+                    tint = Color.Unspecified
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(text = if (isLoading) loadingText else text)
+                if (isLoading) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .height(16.dp)
+                            .width(16.dp),
+                        strokeWidth = 2.dp,
+                        color = progressIndicatorColor
+                    )
+                }
+            }
+        }
 }
