@@ -1,33 +1,48 @@
 package com.syrjakojyrjanai.reminderapp.ui.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.Button
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Surface
+import androidx.compose.material.Tab
+import androidx.compose.material.TabPosition
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.AddLocation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.accompanist.insets.systemBarsPadding
+import com.syrjakoyrjanai.core.domain.entity.Category
+
 
 @Composable
 fun MainScreen(
@@ -37,9 +52,20 @@ fun MainScreen(
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(
+                onClick = { },
+                modifier = Modifier
+                    .size(90.dp),
+                backgroundColor = Color(217,217,217, 255),
+                elevation = FloatingActionButtonDefaults.elevation(0.dp)
+            ) {
+            }
+            FloatingActionButton(
                 onClick = { navigationController.navigate(route = "Reminder") },
-                contentColor = Color(255,255,255, 255),
-                modifier = Modifier.padding(all = 20.dp).size(70.dp),
+                contentColor = Color(217,217,217, 255),
+                modifier = Modifier
+                    .padding(10.dp)
+                    .size(70.dp),
+                backgroundColor = Color(255,255,255, 255)
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -51,11 +77,42 @@ fun MainScreen(
         },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
+
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color(255, 255, 255, 255),
+                contentColor = Color(0, 0, 0, 255),
+                modifier = Modifier.heightIn(100.dp),
+                elevation = 0.dp
+            ) {
+                Spacer(modifier = Modifier.weight(0.06f))
+
+                SearchBar(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .background(Color(217, 217, 217, 255))
+                )
+
+                Spacer(modifier = Modifier.weight(0.06f))
+
+                IconButton(
+                    onClick = { /*TODO*/ }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.CalendarToday,
+                        contentDescription = null,
+                        Modifier.size(50.dp)
+                    )
+                }
+            }
+        },
+
+
         bottomBar = {
             BottomAppBar(
                 backgroundColor = Color(217, 217, 217, 255),
                 contentColor = Color(0, 0, 0, 255),
-                modifier = Modifier.heightIn(80.dp),
+                modifier = Modifier.heightIn(70.dp),
 
 
             ) {
@@ -110,6 +167,99 @@ fun MainScreen(
             }
         }
     ){
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(Color(255,255,255, 255))
+        ) {
+            Spacer(modifier = Modifier.weight(0.05f))
 
+            //CategoryTabs(
+            //    categories = categories,
+            //    selectedCategory = selectedCategory,
+            //    onCategorySelected = onCategorySelected,
+            //)
+
+            Spacer(modifier = Modifier.weight(0.05f))
+
+        }
+    }
+}
+
+@Composable
+private fun SearchBar(
+    query: String = "",
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+   var searchText = remember { mutableStateOf("") }
+
+   OutlinedTextField(
+       modifier = Modifier.width(300.dp),
+       value = searchText.value,
+       onValueChange = { text -> searchText.value = text },
+       label = {
+           Text(
+            text = "Search",
+            textAlign = TextAlign.Center)
+               },
+       shape = RoundedCornerShape(corner = CornerSize(30.dp)),
+
+   )
+}
+
+@Composable
+private fun CategoryTabs(
+    categories: List<Category>,
+    selectedCategory: Category,
+    onCategorySelected: (Category) -> Unit
+) {
+    val selectedIndex = categories.indexOfFirst { it == selectedCategory }
+    ScrollableTabRow(
+        selectedTabIndex = selectedIndex,
+        edgePadding = 24.dp,
+        indicator = emptyTabIndicator,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        categories.forEachIndexed { index, category ->
+            Tab(
+                selected = index == selectedIndex,
+                onClick = { onCategorySelected(category) }
+            ) {
+                ChoiceChipContent(
+                    text = category.name,
+                    selected = index == selectedIndex,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
+                )
+            }
+
+        }
+    }
+}
+
+private val emptyTabIndicator: @Composable (List<TabPosition>) -> Unit = {}
+@Composable
+private fun ChoiceChipContent(
+    text: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        color = when {
+            selected -> MaterialTheme.colors.secondary.copy(alpha = 0.87f)
+            else -> MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+        },
+        contentColor = when {
+            selected -> Color.Black
+            else -> MaterialTheme.colors.onSurface
+        },
+        shape = MaterialTheme.shapes.small,
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
     }
 }

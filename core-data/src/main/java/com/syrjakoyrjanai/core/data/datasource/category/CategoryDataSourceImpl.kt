@@ -1,8 +1,8 @@
 package com.syrjakoyrjanai.core.data.datasource.category
 
-import com.yrkky.core.database.dao.CategoryDao
-import com.yrkky.core.database.entity.CategoryEntity
-import com.yrkky.core.domain.entity.Category
+import com.syrjakoyrjanai.core.database.dao.CategoryDao
+import com.syrjakoyrjanai.core.database.entity.CategoryEntity
+import com.syrjakoyrjanai.core.domain.entity.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

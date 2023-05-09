@@ -1,9 +1,9 @@
 package com.syrjakoyrjanai.core.data.datasource.reminder
 
-import com.yrkky.core.database.dao.ReminderDao
-import com.yrkky.core.database.entity.ReminderEntity
-import com.yrkky.core.domain.entity.Category
-import com.yrkky.core.domain.entity.Reminder
+import com.syrjakoyrjanai.core.database.dao.ReminderDao
+import com.syrjakoyrjanai.core.database.entity.ReminderEntity
+import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Reminder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

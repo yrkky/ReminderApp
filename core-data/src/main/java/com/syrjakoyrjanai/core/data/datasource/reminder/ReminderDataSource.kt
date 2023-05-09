@@ -1,7 +1,7 @@
 package com.syrjakoyrjanai.core.data.datasource.reminder
 
-import com.yrkky.core.domain.entity.Category
-import com.yrkky.core.domain.entity.Reminder
+import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Reminder
 import kotlinx.coroutines.flow.Flow
 
 interface ReminderDataSource {

@@ -1,8 +1,8 @@
 package com.syrjakoyrjanai.core.data.repository
 
-import com.yrkky.core.data.datasource.category.CategoryDataSource
-import com.yrkky.core.domain.entity.Category
-import com.yrkky.core.domain.repository.CategoryRepository
+import com.syrjakoyrjanai.core.data.datasource.category.CategoryDataSource
+import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

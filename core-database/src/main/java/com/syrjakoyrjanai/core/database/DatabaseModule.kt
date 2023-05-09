@@ -1,9 +1,9 @@
-package com.yrkky.core.database
+package com.syrjakoyrjanai.core.database
 
 import android.content.Context
 import androidx.room.Room
-import com.yrkky.core.database.dao.CategoryDao
-import com.yrkky.core.database.dao.ReminderDao
+import com.syrjakoyrjanai.core.database.dao.CategoryDao
+import com.syrjakoyrjanai.core.database.dao.ReminderDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

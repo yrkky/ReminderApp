@@ -1,11 +1,11 @@
-package com.yrkky.core.database.dao
+package com.syrjakoyrjanai.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.yrkky.core.database.entity.ReminderEntity
+import com.syrjakoyrjanai.core.database.entity.ReminderEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,6 +1,6 @@
 package com.syrjakoyrjanai.core.data.datasource.category
 
-import com.yrkky.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Category
 import kotlinx.coroutines.flow.Flow
 
 
