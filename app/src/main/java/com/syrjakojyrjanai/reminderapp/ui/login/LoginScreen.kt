@@ -111,6 +111,7 @@ fun LoginScreen(
                 .height(50.dp),
             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(217, 217, 217, 255)),
+            enabled = true
         ) {
             Text(stringResource(R.string.back))
         }
