@@ -40,7 +40,6 @@ fun LandingScreen(
         )
 
 
-
         Button(
             onClick = {
                 navigationController.navigate("login")

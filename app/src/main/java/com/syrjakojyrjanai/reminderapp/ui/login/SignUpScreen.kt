@@ -7,13 +7,20 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen(
+fun SignUpScreen(
     modifier: Modifier,
     navigationController: NavController
 ) {
 
-    val username = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val confirmPassword = remember { mutableStateOf("") }
+
+    fun buttonEnabled(): Boolean {
+        return password.value.length >= 8 && confirmPassword.value == password.value
+    }
+
+
+
 
 }
