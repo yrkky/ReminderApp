@@ -1,7 +1,8 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
+
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,8 +20,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.Card
-import androidx.compose.material.FabPosition
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
@@ -35,7 +37,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
@@ -46,11 +47,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -104,125 +107,26 @@ fun HomeScreen(
     mainViewModel: MainViewModel
 ){
     Scaffold (
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { },
-                modifier = Modifier
-                    .size(90.dp),
-                backgroundColor = Color(217,217,217, 255),
-                elevation = FloatingActionButtonDefaults.elevation(0.dp)
-            ) {
-            }
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                contentColor = Color(217,217,217, 255),
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(70.dp),
-                backgroundColor = Color(255,255,255, 255)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = null,
-                    modifier = Modifier.size(100.dp),
-                    Color(0,0,0, 255)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
+        //floatingActionButton = {
+        //    popUpMenuButton(
+        //        navigationController = navigationController,
+        //        modifier = Modifier,
+        //    )
+        //},
+        //floatingActionButtonPosition = FabPosition.Center,
+        //isFloatingActionButtonDocked = true,
 
         topBar = {
-            TopAppBar(
-                backgroundColor = Color(255, 255, 255, 255),
-                contentColor = Color(0, 0, 0, 255),
-                modifier = Modifier.heightIn(100.dp),
-                elevation = 0.dp
-            ) {
-                Spacer(modifier = Modifier.weight(0.06f))
-
-                SearchBar(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .background(Color(217, 217, 217, 255))
-                )
-
-                Spacer(modifier = Modifier.weight(0.06f))
-
-                IconButton(
-                    onClick = { /*TODO*/ }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.CalendarToday,
-                        contentDescription = null,
-                        Modifier.size(50.dp)
-                    )
-                }
-            }
+            TopBar(
+                navigationController = navigationController
+            )
         },
 
-
         bottomBar = {
-            BottomAppBar(
-                backgroundColor = Color(217, 217, 217, 255),
-                contentColor = Color(0, 0, 0, 255),
-                modifier = Modifier.heightIn(70.dp),
+            BottomBar(
+                navigationController = navigationController
+            )
 
-
-            ) {
-                Spacer(modifier = Modifier.weight(0.06f))
-
-                IconButton(
-                    onClick = {
-                        // Already in home?
-                        // navigationController.navigate("home")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Home,
-                        contentDescription = null,
-                        Modifier.size(50.dp),
-                        tint = Color(255,0,0,255)
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(0.1f))
-
-                IconButton(
-                    onClick = { navigationController.navigate("reminders") }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Notifications,
-                        contentDescription = null,
-                        Modifier.size(50.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(0.5f))
-
-                IconButton(
-                    onClick = { navigationController.navigate("notes") }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Description,
-                        contentDescription = null,
-                        Modifier.size(50.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(0.1f))
-
-                IconButton(
-                    onClick = { navigationController.navigate("settings") }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Settings,
-                        contentDescription = null,
-                        Modifier.size(50.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.06f))
-            }
         }
     ){
         Column(
@@ -334,6 +238,109 @@ private fun ChoiceChipContent(
 }
 
 @Composable
+private fun TopBar(
+    navigationController: NavController
+) {
+    TopAppBar(
+        backgroundColor = Color(255, 255, 255, 255),
+        contentColor = Color(0, 0, 0, 255),
+        modifier = Modifier.heightIn(100.dp),
+        elevation = 0.dp
+    ) {
+        Spacer(modifier = Modifier.weight(0.06f))
+
+        SearchBar(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .background(Color(217, 217, 217, 255))
+        )
+
+        Spacer(modifier = Modifier.weight(0.06f))
+
+        IconButton(
+            onClick = { /*TODO*/ }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.CalendarToday,
+                contentDescription = null,
+                Modifier.size(50.dp)
+            )
+        }
+    }
+}
+
+
+
+@Composable
+private fun BottomBar(
+    navigationController: NavController
+) {
+    BottomAppBar(
+        backgroundColor = Color(217, 217, 217, 255),
+        contentColor = Color(0, 0, 0, 255),
+        modifier = Modifier.heightIn(70.dp),
+
+
+        ) {
+        Spacer(modifier = Modifier.weight(0.06f))
+
+        IconButton(
+            onClick = {
+                // Already in home?
+                // navigationController.navigate("home")
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Home,
+                contentDescription = null,
+                Modifier.size(50.dp),
+                tint = Color(255, 0, 0, 255)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(0.1f))
+
+        IconButton(
+            onClick = { navigationController.navigate("reminders") }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Notifications,
+                contentDescription = null,
+                Modifier.size(50.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(0.5f))
+
+        IconButton(
+            onClick = { navigationController.navigate("notes") }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Description,
+                contentDescription = null,
+                Modifier.size(50.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(0.1f))
+
+        IconButton(
+            onClick = { navigationController.navigate("settings") }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Settings,
+                contentDescription = null,
+                Modifier.size(50.dp)
+            )
+        }
+    }
+    popUpMenuButton(
+        modifier = Modifier,
+        navigationController = navigationController
+    )
+}
+
+@Composable
 private fun upcomingReminders(
     selectedCategory: Category,
     mainViewModel: MainViewModel,
@@ -382,49 +389,7 @@ private fun ReminderListItem(
     onClick: () -> Unit,
     MainViewModel: MainViewModel
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(0.8f)
-            ) {
-                Text(
-                    text = reminder.title,
-                    style = MaterialTheme.typography.h6,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = reminder.message,
-                    style = MaterialTheme.typography.body1,
-                    fontWeight = FontWeight.Normal
-                )
-            }
-            Spacer(modifier = Modifier.weight(0.2f))
-            IconButton(
-                onClick = { /*TODO*/ }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = null,
-                    Modifier.size(50.dp)
-                )
-            }
-        }
-    }
+    Text(text = "Hello")
 }
 
 
@@ -460,4 +425,52 @@ private fun quickNoteBox(
         )
     }
 
+}
+
+
+@Composable
+private fun popUpMenuButton(
+    modifier: Modifier = Modifier,
+    navigationController: NavController
+) {
+    var expanded by remember { mutableStateOf(false) }
+    FloatingActionButton(
+        onClick = { },
+        modifier = Modifier
+            .size(90.dp)
+            .offset(160.dp, (-40).dp),
+        backgroundColor = Color(217,217,217, 255),
+        elevation = FloatingActionButtonDefaults.elevation(0.dp)
+    ) {
+    }
+
+    FloatingActionButton(
+        contentColor = Color(217,217,217, 255),
+        onClick = { expanded = true },
+        modifier = Modifier
+            .padding(10.dp)
+            .size(70.dp)
+            .offset(160.dp, (-40).dp),
+        backgroundColor = Color(255,255,255, 255)
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Add,
+            contentDescription = null,
+            modifier = Modifier.size(100.dp),
+            Color(0,0,0, 255)
+        )
+    }
+
+    DropdownMenu(
+        modifier = modifier,
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+    ) {
+        DropdownMenuItem(onClick = { navigationController.navigate("reminders") }) {
+            Text("Lisää muistutus")
+        }
+        DropdownMenuItem(onClick = { navigationController.navigate("notes") }) {
+            Text("Lisää muistiinpano")
+        }
+    }
 }
