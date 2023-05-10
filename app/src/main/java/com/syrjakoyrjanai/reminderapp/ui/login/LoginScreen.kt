@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.tools.hasEnoughLength
 import com.syrjakoyrjanai.reminderapp.tools.isValidEmail
 
