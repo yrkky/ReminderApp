@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.systemBarsPadding
 import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -105,11 +106,20 @@ fun AddReminder(
 
                     Button(
                         onClick = {
-                            // TODO: Save the reminder
-                            navigationController.popBackStack()
-
                             if (buttonEnabled()) {
                                 // Save the reminder
+                                viewModel.saveReminder(
+                                    Reminder(
+                                        title = reminderTitle.value,
+                                        reminderTime = LocalDateTime.parse(reminderTime.value),
+                                        creationTime = LocalDateTime.now(),
+                                        creatorId = 1,
+                                        categoryId = getCategoryId(viewModel, reminderCategory.value),
+                                        reminderSeen = LocalDateTime.now(),
+                                    ),
+                                    notify = shouldNotify.value
+                                )
+                                navigationController.popBackStack()
                             } else {
                                 // Some kind of alert why can't save
                                 toastError(context)
@@ -179,7 +189,8 @@ fun AddReminder(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
                         focusedLabelColor = Color.Transparent,
-                    )
+                    ),
+                    singleLine = true,
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -213,8 +224,18 @@ fun AddReminder(
 
                 Button(
                     onClick = {
-                        // TODO: Save reminder
-                        navigationController.navigate("home")
+                        viewModel.saveReminder(
+                            Reminder(
+                                title = reminderTitle.value,
+                                reminderTime = LocalDateTime.parse(reminderTime.value),
+                                creationTime = LocalDateTime.now(),
+                                creatorId = 1,
+                                categoryId = getCategoryId(viewModel, reminderCategory.value),
+                                reminderSeen = LocalDateTime.now(),
+                            ),
+                            notify = shouldNotify.value
+                        )
+                        navigationController.popBackStack()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -240,6 +261,11 @@ fun toastError(context: Context) {
         context.getString(R.string.fill_error),
         Toast.LENGTH_LONG
     ).show()
+}
+
+
+private fun getCategoryId(viewModel: MainViewModel, categoryName: String): Long {
+    return viewModel.categories.value.first { it.name.lowercase() == categoryName.lowercase() }.categoryId
 }
 
 
