@@ -76,15 +76,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-
-    //fun getReminder(reminderId: Long) {
-    //    viewModelScope.launch {
-    //        reminderRepository.getOne(Reminder)
-    //        notifyUserOfReminder(Reminder)
-    //    }
-    //}
-
     fun onCategorySelected(category: Category) {
         _selectedCategory.value = category
     }
@@ -111,11 +102,11 @@ class MainViewModel @Inject constructor(
             ) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //    here to request the missing permissions, and then overriding
+                //    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                 //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+                //    to handle the case where the user grants the permission. See the documentation
+                //    for ActivityCompat#requestPermissions for more details.
                 return
             }
             notify(notificationId, builder.build())
@@ -141,13 +132,6 @@ class MainViewModel @Inject constructor(
         val remindertime = Calendar.getInstance()
         //simpler way than below:
         remindertime.time = Date.from(reminder.reminderTime.atZone(ZoneId.systemDefault()).toInstant())
-
-//        remindertime.set(Calendar.YEAR, reminder.reminderTime.year)
-//        remindertime.set(Calendar.MONTH, reminder.reminderTime.monthValue - 1)
-//        remindertime.set(Calendar.DAY_OF_MONTH, reminder.reminderTime.dayOfMonth)
-//        remindertime.set(Calendar.HOUR_OF_DAY, reminder.reminderTime.hour)
-//        remindertime.set(Calendar.MINUTE, reminder.reminderTime.minute)
-//        remindertime.set(Calendar.SECOND, 0)
 
         Log.i("SetOneTimeNotification", "Now: ${now.time} Reminder: ${remindertime.time}")
         val time = remindertime.timeInMillis - now.timeInMillis
