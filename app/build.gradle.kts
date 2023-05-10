@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.syrjakojyrjanai.reminderapp"
+    namespace = "com.syrjakoyrjanai.reminderapp"
     compileSdk = sdk.compile
 
     defaultConfig {
-        applicationId = "com.syrjakojyrjanai.reminderapp"
+        applicationId = "com.syrjakoyrjanai.reminderapp"
 
         minSdk = sdk.min
         targetSdk = sdk.target

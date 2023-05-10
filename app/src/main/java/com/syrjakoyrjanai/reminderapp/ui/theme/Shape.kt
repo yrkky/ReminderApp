@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.theme
+package com.syrjakoyrjanai.reminderapp.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.login
+package com.syrjakoyrjanai.reminderapp.ui.login
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -22,9 +22,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.syrjakojyrjanai.reminderapp.R
-import com.syrjakojyrjanai.reminderapp.tools.hasEnoughLength
-import com.syrjakojyrjanai.reminderapp.tools.isValidEmail
+import com.syrjakoyrjanai.reminderapp.R
+import com.syrjakoyrjanai.reminderapp.tools.hasEnoughLength
+import com.syrjakoyrjanai.reminderapp.tools.isValidEmail
 import java.io.Console
 
 @Composable
@@ -66,7 +66,7 @@ fun SignUpScreen(
     Column(
         modifier = modifier.padding(20.dp),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
 
         Text(

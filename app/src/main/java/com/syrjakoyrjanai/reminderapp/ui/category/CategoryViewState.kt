@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.category
+package com.syrjakoyrjanai.reminderapp.ui.category
 
 
 import com.syrjakoyrjanai.core.domain.entity.Category

@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.tools
+package com.syrjakoyrjanai.reminderapp.tools
 
 
 /**

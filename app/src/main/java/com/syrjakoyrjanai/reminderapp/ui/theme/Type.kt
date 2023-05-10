@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.theme
+package com.syrjakoyrjanai.reminderapp.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

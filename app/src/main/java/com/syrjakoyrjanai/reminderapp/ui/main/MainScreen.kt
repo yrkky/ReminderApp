@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.main
+package com.syrjakoyrjanai.reminderapp.ui.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -43,15 +43,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.syrjakojyrjanai.reminderapp.ui.category.CategoryViewModel
-import com.syrjakojyrjanai.reminderapp.ui.category.CategoryViewState
+import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
+import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
 
 
 
 @Composable
 fun Home(
-    navController: NavController,
+    navigationController: NavController,
     categoryViewModel: CategoryViewModel = hiltViewModel(),
     reminderViewModel: ReminderViewModel = hiltViewModel(),
 ) {
@@ -67,7 +67,7 @@ fun Home(
                     selectedCategory = selectedCategory!!,
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
-                    navController = navController,
+                    navigationController = navigationController,
                     reminderViewModel = reminderViewModel
                 )
             }

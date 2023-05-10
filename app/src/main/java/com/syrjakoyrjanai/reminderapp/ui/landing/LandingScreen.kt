@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.ui.landing
+package com.syrjakoyrjanai.reminderapp.ui.landing
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.syrjakojyrjanai.reminderapp.R
+import com.syrjakoyrjanai.reminderapp.R
 
 @Composable
 fun LandingScreen(
@@ -40,7 +40,7 @@ fun LandingScreen(
             modifier = Modifier.align(CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(380.dp))
+        Spacer(modifier = Modifier.height(243.dp))
 
 
         Button(

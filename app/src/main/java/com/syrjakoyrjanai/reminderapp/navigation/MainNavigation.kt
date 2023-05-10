@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp.navigation
+package com.syrjakoyrjanai.reminderapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.syrjakojyrjanai.reminderapp.ui.main.MainScreen
-import com.syrjakojyrjanai.reminderapp.ui.landing.LandingScreen
-import com.syrjakojyrjanai.reminderapp.ui.login.LoginScreen
-import com.syrjakojyrjanai.reminderapp.ui.login.SignUpScreen
+import com.syrjakoyrjanai.reminderapp.ui.main.Home
+import com.syrjakoyrjanai.reminderapp.ui.landing.LandingScreen
+import com.syrjakoyrjanai.reminderapp.ui.login.LoginScreen
+import com.syrjakoyrjanai.reminderapp.ui.login.SignUpScreen
 
 @Composable
 fun MainNavigation (){
@@ -28,7 +28,7 @@ fun MainNavigation (){
             SignUpScreen(navigationController = navigationController, modifier = Modifier.fillMaxSize())
         }
         composable(route = "home") {
-            MainScreen(navigationController = navigationController, modifier = Modifier.fillMaxSize())
+            Home(navigationController = navigationController, modifier = Modifier.fillMaxSize())
         }
     }
 }

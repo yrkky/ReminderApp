@@ -1,8 +1,8 @@
-package com.syrjakojyrjanai.reminderapp.ui.category
+package com.syrjakoyrjanai.reminderapp.ui.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jsyrjako.reminderapp.ui.category.CategoryViewState
+import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.repository.CategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.syrjakojyrjanai.reminderapp
+package com.syrjakoyrjanai.reminderapp
 
 import org.junit.Test
 
