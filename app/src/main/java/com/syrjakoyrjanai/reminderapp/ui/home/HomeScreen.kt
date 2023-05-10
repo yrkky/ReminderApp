@@ -426,13 +426,6 @@ private fun upcomingReminders(
             ) {
                 items(reminderList) { item ->
 
-                    try{
-                        val reminder = item as Reminder
-
-                    } catch (e: Exception) {
-                        println("Error: ${e.message}")
-                    }
-
                     ReminderListItem(
                         reminder = item,
                         navigationController = navigationController,
@@ -472,13 +465,6 @@ private fun importantReminders(
                     .fillMaxWidth()
             ) {
                 items(reminderList) { item ->
-
-                    try{
-                        val reminder = item as Reminder
-
-                    } catch (e: Exception) {
-                        println("Error: ${e.message}")
-                    }
 
                     ReminderListItem(
                         reminder = item,
