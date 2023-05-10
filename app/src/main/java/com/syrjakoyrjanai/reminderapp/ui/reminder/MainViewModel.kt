@@ -7,12 +7,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.NotificationManagerCompat.from
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -24,7 +22,6 @@ import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.core.domain.repository.CategoryRepository
 import com.syrjakoyrjanai.core.domain.repository.ReminderRepository
 import com.syrjakoyrjanai.reminderapp.Graph
-import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.reminderapp.ui.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel

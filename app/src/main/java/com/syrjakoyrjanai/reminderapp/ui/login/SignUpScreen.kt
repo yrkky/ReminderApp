@@ -1,6 +1,5 @@
 package com.syrjakoyrjanai.reminderapp.ui.login
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,10 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.tools.hasEnoughLength
 import com.syrjakoyrjanai.reminderapp.tools.isValidEmail
-import java.io.Console
 
 @Composable
 fun SignUpScreen(
