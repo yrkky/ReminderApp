@@ -181,7 +181,8 @@ private fun ReminderScreen(
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = null,
-                        Modifier.size(50.dp)
+                        Modifier.size(50.dp),
+                        tint = Color(255,0,0,255)
                     )
                 }
 

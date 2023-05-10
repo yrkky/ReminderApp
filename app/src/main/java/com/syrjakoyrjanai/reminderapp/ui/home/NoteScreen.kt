@@ -192,7 +192,8 @@ private fun NotesScreen(
                     Icon(
                         imageVector = Icons.Outlined.Description,
                         contentDescription = null,
-                        Modifier.size(50.dp)
+                        Modifier.size(50.dp),
+                        tint = Color(255,0,0,255)
                     )
                 }
 

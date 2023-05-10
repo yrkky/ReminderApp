@@ -181,7 +181,8 @@ fun HomeScreen(
                     Icon(
                         imageVector = Icons.Outlined.Home,
                         contentDescription = null,
-                        Modifier.size(50.dp)
+                        Modifier.size(50.dp),
+                        tint = Color(255,0,0,255)
                     )
                 }
 
