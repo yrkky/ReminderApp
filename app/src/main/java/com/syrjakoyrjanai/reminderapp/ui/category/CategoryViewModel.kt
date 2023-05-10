@@ -24,9 +24,6 @@ class CategoryViewModel @Inject constructor(
     }
 
     init {
-        fakeData().forEach {
-            addCategory(it)
-        }
         viewModelScope.launch {
             loadCategories()
         }
