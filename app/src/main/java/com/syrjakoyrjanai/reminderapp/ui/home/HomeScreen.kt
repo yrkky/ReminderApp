@@ -3,6 +3,7 @@ package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -460,17 +461,22 @@ private fun popUpMenuButton(
             Color(0,0,0, 255)
         )
     }
-
-    DropdownMenu(
-        modifier = modifier,
-        expanded = expanded,
-        onDismissRequest = { expanded = false },
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        DropdownMenuItem(onClick = { navigationController.navigate("reminders") }) {
-            Text("Lisää muistutus")
-        }
-        DropdownMenuItem(onClick = { navigationController.navigate("notes") }) {
-            Text("Lisää muistiinpano")
+        DropdownMenu(
+            modifier = modifier,
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            offset = DpOffset(120.dp, (5).dp)
+        ) {
+            DropdownMenuItem(onClick = { navigationController.navigate("reminders") }) {
+                Text("Lisää muistutus")
+            }
+            DropdownMenuItem(onClick = { navigationController.navigate("notes") }) {
+                Text("Lisää muistiinpano")
+            }
         }
     }
 }
