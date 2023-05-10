@@ -34,18 +34,56 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.syrjakojyrjanai.reminderapp.ui.category.CategoryViewModel
+import com.syrjakojyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
 
 
+
 @Composable
-fun MainScreen(
+fun Home(
+    navController: NavController,
+    categoryViewModel: CategoryViewModel = hiltViewModel(),
+    reminderViewModel: ReminderViewModel = hiltViewModel(),
+) {
+    val viewState by categoryViewModel.uiState.collectAsState()
+
+    when (viewState) {
+        is CategoryViewState.Success -> {
+            val selectedCategory = (viewState as CategoryViewState.Success).selectedCategory
+            val categories = (viewState as CategoryViewState.Success).data
+
+            Surface(modifier = Modifier.fillMaxSize()) {
+                Main(
+                    selectedCategory = selectedCategory!!,
+                    categories = categories,
+                    onCategorySelected = categoryViewModel::onCategorySelected,
+                    navController = navController,
+                    reminderViewModel = reminderViewModel
+                )
+            }
+        }
+        is CategoryViewState.Error -> {
+
+        }
+        is CategoryViewState.Loading -> {
+
+        }
+    }
+
+}
+
+@Composable
+fun Main(
     navigationController: NavController,
     modifier: Modifier,
 ){
@@ -60,7 +98,7 @@ fun MainScreen(
             ) {
             }
             FloatingActionButton(
-                onClick = { navigationController.navigate(route = "Reminder") },
+                onClick = { /*TODO*/ },
                 contentColor = Color(217,217,217, 255),
                 modifier = Modifier
                     .padding(10.dp)

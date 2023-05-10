@@ -16,7 +16,7 @@ fun MainNavigation (){
     val navigationController = rememberNavController()
     NavHost(
         navController = navigationController,
-        startDestination = "home"
+        startDestination = "landing"
     ) {
         composable(route = "landing") {
             LandingScreen(navigationController = navigationController, modifier = Modifier.fillMaxSize())
