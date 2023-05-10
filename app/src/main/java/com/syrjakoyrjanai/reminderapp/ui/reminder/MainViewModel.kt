@@ -30,6 +30,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import com.syrjakoyrjanai.reminderapp.R
+import com.syrjakoyrjanai.reminderapp.tools.NotificationWorker
 
 private lateinit var editReminder: Reminder
 
