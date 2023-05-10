@@ -28,7 +28,7 @@ fun MainNavigation (){
             SignUpScreen(navigationController = navigationController, modifier = Modifier.fillMaxSize())
         }
         composable(route = "home") {
-            Home(navigationController = navigationController, modifier = Modifier.fillMaxSize())
+            Home(navigationController = navigationController)
         }
     }
 }

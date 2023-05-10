@@ -51,7 +51,7 @@ import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 
 
 @Composable
-fun HomeScreen(
+fun Home(
     navigationController: NavController,
     categoryViewModel: CategoryViewModel = hiltViewModel(),
     reminderViewModel: MainViewModel = hiltViewModel(),
@@ -64,7 +64,7 @@ fun HomeScreen(
             val categories = (viewState as CategoryViewState.Success).data
 
             Surface(modifier = Modifier.fillMaxSize()) {
-                Home(
+                HomeScreen(
                     selectedCategory = selectedCategory!!,
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
@@ -84,7 +84,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun Home(
+fun HomeScreen(
     selectedCategory: Category,
     categories: List<Category>,
     onCategorySelected: (Category) -> Unit,
