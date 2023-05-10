@@ -80,7 +80,7 @@ fun Home(
                     selectedCategory = selectedCategory!!,
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
-                    navController = navigationController,
+                    navigationController = navigationController,
                     mainViewModel = reminderViewModel
                 )
             }
@@ -100,7 +100,7 @@ fun HomeScreen(
     selectedCategory: Category,
     categories: List<Category>,
     onCategorySelected: (Category) -> Unit,
-    navController: NavController,
+    navigationController: NavController,
     mainViewModel: MainViewModel
 ){
     Scaffold (
@@ -238,7 +238,7 @@ fun HomeScreen(
 
             upcomingReminders(
                 selectedCategory = selectedCategory,
-                navController = navController,
+                navigationController = navigationController,
                 mainViewModel = mainViewModel
             )
 
@@ -336,7 +336,7 @@ private fun ChoiceChipContent(
 private fun upcomingReminders(
     selectedCategory: Category,
     mainViewModel: MainViewModel,
-    navController: NavController
+    navigationController: NavController
 ){
     mainViewModel.loadRemindersFor(selectedCategory)
 
@@ -363,7 +363,7 @@ private fun upcomingReminders(
 
                     ReminderListItem(
                         reminder = item,
-                        navController = navController,
+                        navigationController = navigationController,
                         onClick = { /*TODO*/ },
                         MainViewModel = mainViewModel
                     )
@@ -376,7 +376,7 @@ private fun upcomingReminders(
 @Composable
 private fun ReminderListItem(
     reminder: Reminder,
-    navController: NavController,
+    navigationController: NavController,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     MainViewModel: MainViewModel
