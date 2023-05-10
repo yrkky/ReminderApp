@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.syrjakoyrjanai.reminderapp.ui.main.Home
+import com.syrjakoyrjanai.reminderapp.ui.home.Home
 import com.syrjakoyrjanai.reminderapp.ui.landing.LandingScreen
 import com.syrjakoyrjanai.reminderapp.ui.login.LoginScreen
 import com.syrjakoyrjanai.reminderapp.ui.login.SignUpScreen

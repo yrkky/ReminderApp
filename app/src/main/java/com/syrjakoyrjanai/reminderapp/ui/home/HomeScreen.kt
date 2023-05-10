@@ -1,4 +1,4 @@
-package com.syrjakoyrjanai.reminderapp.ui.main
+package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -35,6 +35,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -46,14 +47,14 @@ import androidx.navigation.NavController
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
-
+import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 
 
 @Composable
-fun Home(
+fun HomeScreen(
     navigationController: NavController,
     categoryViewModel: CategoryViewModel = hiltViewModel(),
-    reminderViewModel: ReminderViewModel = hiltViewModel(),
+    reminderViewModel: MainViewModel = hiltViewModel(),
 ) {
     val viewState by categoryViewModel.uiState.collectAsState()
 
@@ -63,7 +64,7 @@ fun Home(
             val categories = (viewState as CategoryViewState.Success).data
 
             Surface(modifier = Modifier.fillMaxSize()) {
-                Main(
+                Home(
                     selectedCategory = selectedCategory!!,
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
@@ -83,9 +84,12 @@ fun Home(
 }
 
 @Composable
-fun Main(
+fun Home(
+    selectedCategory: Category,
+    categories: List<Category>,
+    onCategorySelected: (Category) -> Unit,
     navigationController: NavController,
-    modifier: Modifier,
+    reminderViewModel: MainViewModel
 ){
     Scaffold (
         floatingActionButton = {
@@ -206,7 +210,7 @@ fun Main(
         }
     ){
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(Color(255,255,255, 255))
         ) {
