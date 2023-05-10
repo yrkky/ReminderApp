@@ -23,4 +23,12 @@
 
     <string name="login_benefits">Kirjautumalla sisään, voit synkronoida tiedot usean laitteen välillä</string>
     <string name="sign_up_benefits">Luomalla käyttäjätilin, voit synkronoida tiedot usean laitteen välillä</string>
+
+    <string name="important">Tärkeät</string>
+    <string name="upcoming">Tulevat</string>
+    <string name="quick_notes">Pikamuistiinpanot</string>
+    <string name="search">Haku</string>
+    <string name="add_reminder">Lisää muistutus</string>
+    <string name="add_note">Lisää muistiinpano</string>
+
 </resources>

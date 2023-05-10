@@ -23,4 +23,12 @@
 
     <string name="login_benefits">By logging in, you can synchronise data between multiple devices</string>
     <string name="sign_up_benefits">By creating a user account, you can synchronise data between multiple devices</string>
+
+    <string name="important">Important</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="quick_notes">Quick notes</string>
+    <string name="search">Search</string>
+    <string name="add_reminder">Add reminder</string>
+    <string name="add_note">Add note</string>
+
 </resources>

@@ -39,6 +39,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabPosition
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
@@ -58,6 +59,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -69,6 +71,7 @@ import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.entity.Reminder
+import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
 import kotlin.concurrent.timerTask
@@ -176,7 +179,7 @@ private fun SearchBar(
        onValueChange = { text -> searchText.value = text },
        label = {
            Text(
-            text = "Search",
+            text = stringResource(R.string.search),
             textAlign = TextAlign.Center)
                },
        singleLine = true,
@@ -384,11 +387,11 @@ private fun popUpMenuButton(
             onDismissRequest = { expanded = false },
             offset = DpOffset(120.dp, (5).dp)
         ) {
-            DropdownMenuItem(onClick = { navigationController.navigate("reminders") }) {
-                Text("Lisää muistutus")
+            DropdownMenuItem(onClick = { navigationController.navigate("addreminder") }) {
+                Text(stringResource(R.string.add_reminder))
             }
-            DropdownMenuItem(onClick = { navigationController.navigate("notes") }) {
-                Text("Lisää muistiinpano")
+            DropdownMenuItem(onClick = { navigationController.navigate("addnotes") }) {
+                Text(stringResource(R.string.add_note))
             }
         }
     }
@@ -411,7 +414,7 @@ private fun upcomingReminders(
             val reminderList = (reminderViewState as ReminderViewState.Success).data
 
             Text(
-                text = "Tulevat",
+                text = stringResource(R.string.upcoming),
                 style = MaterialTheme.typography.h6
             )
 
@@ -424,46 +427,6 @@ private fun upcomingReminders(
                 items(reminderList) { item ->
 
                     ReminderListItem(
-                        reminder = item,
-                        navigationController = navigationController,
-                        onClick = { /*TODO*/ },
-                        MainViewModel = mainViewModel
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun importantReminders(
-    selectedCategory: Category,
-    mainViewModel: MainViewModel,
-    navigationController: NavController
-){
-    mainViewModel.loadRemindersFor(selectedCategory)
-
-    val reminderViewState by mainViewModel.reminderState.collectAsState()
-
-    when (reminderViewState) {
-        is ReminderViewState.Loading -> {}
-        is ReminderViewState.Success -> {
-            val reminderList = (reminderViewState as ReminderViewState.Success).data
-
-            Text(
-                text = "Tärkeät",
-                style = MaterialTheme.typography.h6
-            )
-
-            LazyRow(
-                contentPadding = PaddingValues(0.dp),
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                items(reminderList) { item ->
-
-                    importantReminderListItem(
                         reminder = item,
                         navigationController = navigationController,
                         onClick = { /*TODO*/ },
@@ -493,26 +456,59 @@ private fun ReminderListItem(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable(onClick = onClick)
-                .padding(10.dp)
+                .clickable {
+                    MainViewModel.setEditReminder(reminder)
+                    navigationController.navigate("addreminder")
+                }
         ) {
             Text(
                 text = reminder.title,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp)
+                    .fillMaxHeight(),
+                textAlign = TextAlign.Center
             )
+        }
+    }
+}
+
+@Composable
+private fun importantReminders(
+    selectedCategory: Category,
+    mainViewModel: MainViewModel,
+    navigationController: NavController
+){
+    mainViewModel.loadRemindersFor(selectedCategory)
+
+    val reminderViewState by mainViewModel.reminderState.collectAsState()
+
+    when (reminderViewState) {
+        is ReminderViewState.Loading -> {}
+        is ReminderViewState.Success -> {
+            val reminderList = (reminderViewState as ReminderViewState.Success).data
 
             Text(
-                text = reminder.message,
-                style = MaterialTheme.typography.body1
+                text = stringResource(R.string.important),
+                style = MaterialTheme.typography.h6
             )
 
-            Text(
-                text = reminder.reminderTime.toString(),
-                style = MaterialTheme.typography.body1
-            )
+            LazyRow(
+                contentPadding = PaddingValues(0.dp),
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(reminderList) { item ->
+
+                    importantReminderListItem(
+                        reminder = item,
+                        navigationController = navigationController,
+                        onClick = { /*TODO*/ },
+                        MainViewModel = mainViewModel
+                    )
+                }
+            }
         }
     }
 }
@@ -536,7 +532,7 @@ private fun importantReminderListItem(
             modifier = modifier
                 .clickable {
                     MainViewModel.setEditReminder(reminder)
-                    navigationController.navigate("ReminderEdit")
+                    navigationController.navigate("addreminder")
                 }
                 .fillMaxWidth(),
 
@@ -558,10 +554,11 @@ private fun importantReminderListItem(
                        linkTo(
                            start = parent.start,
                            end = parent.end,
-                           startMargin = 20.dp,
-                           endMargin = 0.dp
+                           startMargin = 0.dp,
+                           endMargin = 4.dp
                        )
-                    }
+                    },
+                textAlign = TextAlign.Center
             )
 
             Icon(
@@ -577,7 +574,6 @@ private fun importantReminderListItem(
                     )
                 }
             )
-
         }
     }
 }
@@ -595,7 +591,7 @@ private fun quickNoteBox(
             .padding(10.dp)
     ) {
         Text(
-            text = "Pikamuistiinpano",
+            text = stringResource(R.string.quick_notes),
             style = MaterialTheme.typography.h6,
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -603,15 +599,23 @@ private fun quickNoteBox(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.4f),
+                .fillMaxHeight(0.5f).background(Color(217, 217, 217, 255)),
             value = textbox.value,
             onValueChange = { text -> textbox.value = text },
             label = {
                 Text(
-                    text = textbox.value,
+                    text = "",
                     textAlign = TextAlign.Center)
             },
-            shape = RoundedCornerShape(corner = CornerSize(30.dp)),
+            shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color(217,217,217, 255),
+                unfocusedBorderColor = Color(217,217,217, 255),
+                focusedLabelColor = Color(0,0,0, 255),
+                unfocusedLabelColor = Color(0,0,0, 255),
+                cursorColor = Color(0,0,0, 255),
+                textColor = Color(0,0,0, 255)
+            )
         )
     }
 
