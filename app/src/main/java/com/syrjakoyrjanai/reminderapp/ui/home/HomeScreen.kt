@@ -173,7 +173,10 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(0.06f))
 
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        // Already in home?
+                        // navigationController.navigate("home")
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Home,
@@ -185,7 +188,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(0.1f))
 
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { navigationController.navigate("reminders") }
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
@@ -197,7 +200,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(0.5f))
 
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { navigationController.navigate("notes") }
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Description,
@@ -209,7 +212,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(0.1f))
 
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { navigationController.navigate("settings") }
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Settings,
