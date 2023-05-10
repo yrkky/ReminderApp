@@ -212,15 +212,13 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(255,255,255, 255))
+                .background(Color(255, 255, 255, 255))
         ) {
-            Spacer(modifier = Modifier.weight(0.05f))
-
-            //CategoryTabs(
-            //    categories = categories,
-            //    selectedCategory = selectedCategory,
-            //    onCategorySelected = onCategorySelected,
-            //)
+            CategoryTabs(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = onCategorySelected,
+            )
 
             Spacer(modifier = Modifier.weight(0.05f))
 
@@ -245,8 +243,8 @@ private fun SearchBar(
             text = "Search",
             textAlign = TextAlign.Center)
                },
+       singleLine = true,
        shape = RoundedCornerShape(corner = CornerSize(30.dp)),
-
    )
 }
 
@@ -259,9 +257,10 @@ private fun CategoryTabs(
     val selectedIndex = categories.indexOfFirst { it == selectedCategory }
     ScrollableTabRow(
         selectedTabIndex = selectedIndex,
-        edgePadding = 24.dp,
+        edgePadding = 10.dp,
         indicator = emptyTabIndicator,
         modifier = Modifier.fillMaxWidth(),
+        backgroundColor = Color(0,0,0,0)
     ) {
         categories.forEachIndexed { index, category ->
             Tab(
@@ -271,7 +270,7 @@ private fun CategoryTabs(
                 ChoiceChipContent(
                     text = category.name,
                     selected = index == selectedIndex,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 3.dp)
                 )
             }
 
@@ -288,12 +287,12 @@ private fun ChoiceChipContent(
 ) {
     Surface(
         color = when {
-            selected -> MaterialTheme.colors.secondary.copy(alpha = 0.87f)
-            else -> MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+            selected -> Color(0,0,0,255)
+            else -> Color(217, 217, 217, 255)
         },
         contentColor = when {
-            selected -> Color.Black
-            else -> MaterialTheme.colors.onSurface
+            selected -> Color.White
+            else -> Color(0, 0, 0, 255)
         },
         shape = MaterialTheme.shapes.small,
         modifier = modifier
@@ -301,7 +300,7 @@ private fun ChoiceChipContent(
         Text(
             text = text,
             style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
         )
     }
 }
