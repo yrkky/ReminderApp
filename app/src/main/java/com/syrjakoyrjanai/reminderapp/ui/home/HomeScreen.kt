@@ -2,9 +2,11 @@ package com.syrjakoyrjanai.reminderapp.ui.home
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,6 +23,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FloatingActionButton
@@ -140,7 +143,6 @@ fun HomeScreen(
                 selectedCategory = selectedCategory,
                 onCategorySelected = onCategorySelected,
             )
-            Spacer(modifier = Modifier.height(20.dp))
 
             upcomingReminders(
                 selectedCategory = selectedCategory,
@@ -148,7 +150,11 @@ fun HomeScreen(
                 mainViewModel = mainViewModel
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            importantReminders(
+                selectedCategory = selectedCategory,
+                navigationController = navigationController,
+                mainViewModel = mainViewModel
+            )
             quickNoteBox(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -270,8 +276,6 @@ private fun TopBar(
     }
 }
 
-
-
 @Composable
 private fun BottomBar(
     navigationController: NavController
@@ -342,94 +346,6 @@ private fun BottomBar(
 }
 
 @Composable
-private fun upcomingReminders(
-    selectedCategory: Category,
-    mainViewModel: MainViewModel,
-    navigationController: NavController
-){
-    mainViewModel.loadRemindersFor(selectedCategory)
-
-    val reminderViewState by mainViewModel.reminderState.collectAsState()
-
-    when (reminderViewState) {
-        is ReminderViewState.Loading -> {}
-        is ReminderViewState.Success -> {
-            val reminderList = (reminderViewState as ReminderViewState.Success).data
-
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            ) {
-                items(reminderList) { item ->
-
-                    try{
-                        val reminder = item as Reminder
-
-                    } catch (e: Exception) {
-                        println("Error: ${e.message}")
-                    }
-
-                    ReminderListItem(
-                        reminder = item,
-                        navigationController = navigationController,
-                        onClick = { /*TODO*/ },
-                        MainViewModel = mainViewModel
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ReminderListItem(
-    reminder: Reminder,
-    navigationController: NavController,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    MainViewModel: MainViewModel
-) {
-    Text(text = "Hello")
-}
-
-
-@Composable
-private fun quickNoteBox(
-    modifier: Modifier = Modifier
-) {
-    var textbox = remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp)
-    ) {
-        Text(
-            text = "Pikamuistiinpano",
-            style = MaterialTheme.typography.h6,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.4f),
-            value = textbox.value,
-            onValueChange = { text -> textbox.value = text },
-            label = {
-                Text(
-                    text = "",
-                    textAlign = TextAlign.Center)
-            },
-            shape = RoundedCornerShape(corner = CornerSize(30.dp)),
-        )
-    }
-
-}
-
-
-@Composable
 private fun popUpMenuButton(
     modifier: Modifier = Modifier,
     navigationController: NavController
@@ -479,4 +395,176 @@ private fun popUpMenuButton(
             }
         }
     }
+}
+
+
+@Composable
+private fun upcomingReminders(
+    selectedCategory: Category,
+    mainViewModel: MainViewModel,
+    navigationController: NavController
+){
+    mainViewModel.loadRemindersFor(selectedCategory)
+
+    val reminderViewState by mainViewModel.reminderState.collectAsState()
+
+    when (reminderViewState) {
+        is ReminderViewState.Loading -> {}
+        is ReminderViewState.Success -> {
+            val reminderList = (reminderViewState as ReminderViewState.Success).data
+
+            Text(
+                text = "Tulevat",
+                style = MaterialTheme.typography.h6
+            )
+
+            LazyRow(
+                contentPadding = PaddingValues(0.dp),
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(reminderList) { item ->
+
+                    try{
+                        val reminder = item as Reminder
+
+                    } catch (e: Exception) {
+                        println("Error: ${e.message}")
+                    }
+
+                    ReminderListItem(
+                        reminder = item,
+                        navigationController = navigationController,
+                        onClick = { /*TODO*/ },
+                        MainViewModel = mainViewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun importantReminders(
+    selectedCategory: Category,
+    mainViewModel: MainViewModel,
+    navigationController: NavController
+){
+    mainViewModel.loadRemindersFor(selectedCategory)
+
+    val reminderViewState by mainViewModel.reminderState.collectAsState()
+
+    when (reminderViewState) {
+        is ReminderViewState.Loading -> {}
+        is ReminderViewState.Success -> {
+            val reminderList = (reminderViewState as ReminderViewState.Success).data
+
+            Text(
+                text = "Tärkeät",
+                style = MaterialTheme.typography.h6
+            )
+
+            LazyRow(
+                contentPadding = PaddingValues(0.dp),
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(reminderList) { item ->
+
+                    try{
+                        val reminder = item as Reminder
+
+                    } catch (e: Exception) {
+                        println("Error: ${e.message}")
+                    }
+
+                    ReminderListItem(
+                        reminder = item,
+                        navigationController = navigationController,
+                        onClick = { /*TODO*/ },
+                        MainViewModel = mainViewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReminderListItem(
+    reminder: Reminder,
+    navigationController: NavController,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    MainViewModel: MainViewModel
+) {
+    Card(
+        modifier = modifier
+            .padding(10.dp)
+            .size(100.dp),
+        shape = RoundedCornerShape(10.dp),
+        backgroundColor = Color(217,217,217, 255)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable(onClick = onClick)
+                .padding(10.dp)
+        ) {
+            Text(
+                text = reminder.title,
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp)
+            )
+
+            Text(
+                text = reminder.message,
+                style = MaterialTheme.typography.body1
+            )
+
+            Text(
+                text = reminder.reminderTime.toString(),
+                style = MaterialTheme.typography.body1
+            )
+        }
+    }
+}
+
+
+@Composable
+private fun quickNoteBox(
+    modifier: Modifier = Modifier
+) {
+    var textbox = remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+        Text(
+            text = "Pikamuistiinpano",
+            style = MaterialTheme.typography.h6,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.4f),
+            value = textbox.value,
+            onValueChange = { text -> textbox.value = text },
+            label = {
+                Text(
+                    text = textbox.value,
+                    textAlign = TextAlign.Center)
+            },
+            shape = RoundedCornerShape(corner = CornerSize(30.dp)),
+        )
+    }
+
 }

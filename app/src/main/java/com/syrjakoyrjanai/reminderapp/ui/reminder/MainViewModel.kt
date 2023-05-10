@@ -337,11 +337,11 @@ class MainViewModel @Inject constructor(
                 categoryRepository.addCategory(it)
             }
         }
-//        dummyData().forEach {
-//            viewModelScope.launch {
-//                saveReminder(it)
-//            }
-//        }
+        dummyData().forEach {
+            viewModelScope.launch {
+                saveReminder(it, false)
+            }
+        }
         viewModelScope.launch {
             loadCategories()
         }
