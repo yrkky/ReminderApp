@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.entity.Reminder
-import com.syrjakoyrjanai.mobilecomp.ui.category.CategoryViewState
+import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
