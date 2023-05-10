@@ -53,12 +53,4 @@ class CategoryViewModel @Inject constructor(
             .catch { error -> CategoryViewState.Error(error) }
             .launchIn(viewModelScope)
     }
-
-    private fun fakeData() = listOf(
-        Category(name = "Home"),
-        Category(name = "Family"),
-        Category(name = "Hobbies"),
-        Category(name = "Work")
-    )
-
 }
