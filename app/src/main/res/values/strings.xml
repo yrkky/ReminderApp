@@ -10,6 +10,7 @@
 
     <string name="skip">Ohita</string>
     <string name="back">Takaisin</string>
+    <string name="save">Tallenna</string>
 
     <string name="login_benefits">Kirjautumalla sisään, voit synkronoida tiedot usean laitteen välillä</string>
     <string name="sign_up_benefits">Luomalla käyttäjätilin, voit synkronoida tiedot usean laitteen välillä</string>

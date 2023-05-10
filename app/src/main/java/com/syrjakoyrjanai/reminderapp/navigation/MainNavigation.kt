@@ -13,6 +13,7 @@ import com.syrjakoyrjanai.reminderapp.ui.home.Settings
 import com.syrjakoyrjanai.reminderapp.ui.landing.LandingScreen
 import com.syrjakoyrjanai.reminderapp.ui.login.LoginScreen
 import com.syrjakoyrjanai.reminderapp.ui.login.SignUpScreen
+import com.syrjakoyrjanai.reminderapp.ui.reminder.AddReminder
 
 @Composable
 fun MainNavigation (){
@@ -41,6 +42,9 @@ fun MainNavigation (){
         }
         composable(route = "notes") {
             Notes(navigationController = navigationController)
+        }
+        composable(route = "addreminder") {
+            AddReminder(navigationController = navigationController)
         }
     }
 }
