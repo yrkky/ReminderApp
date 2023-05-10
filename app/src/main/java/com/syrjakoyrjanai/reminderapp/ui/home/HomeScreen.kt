@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FloatingActionButton
@@ -46,6 +47,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -59,6 +61,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
@@ -67,6 +71,7 @@ import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
+import kotlin.concurrent.timerTask
 
 
 @Composable
@@ -111,14 +116,6 @@ fun HomeScreen(
     mainViewModel: MainViewModel
 ){
     Scaffold (
-        //floatingActionButton = {
-        //    popUpMenuButton(
-        //        navigationController = navigationController,
-        //        modifier = Modifier,
-        //    )
-        //},
-        //floatingActionButtonPosition = FabPosition.Center,
-        //isFloatingActionButtonDocked = true,
 
         topBar = {
             TopBar(
@@ -283,7 +280,7 @@ private fun BottomBar(
     BottomAppBar(
         backgroundColor = Color(217, 217, 217, 255),
         contentColor = Color(0, 0, 0, 255),
-        modifier = Modifier.heightIn(70.dp),
+        modifier = Modifier.heightIn(90.dp),
 
 
         ) {
@@ -466,7 +463,7 @@ private fun importantReminders(
             ) {
                 items(reminderList) { item ->
 
-                    ReminderListItem(
+                    importantReminderListItem(
                         reminder = item,
                         navigationController = navigationController,
                         onClick = { /*TODO*/ },
@@ -516,6 +513,71 @@ private fun ReminderListItem(
                 text = reminder.reminderTime.toString(),
                 style = MaterialTheme.typography.body1
             )
+        }
+    }
+}
+
+@Composable
+private fun importantReminderListItem(
+    reminder: Reminder,
+    navigationController: NavController,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    MainViewModel: MainViewModel
+) {
+    Card(
+        modifier = modifier
+            .padding(10.dp)
+            .size(100.dp),
+        shape = RoundedCornerShape(10.dp),
+        backgroundColor = Color(217,217,217, 255)
+    ) {
+        ConstraintLayout(
+            modifier = modifier
+                .clickable {
+                    MainViewModel.setEditReminder(reminder)
+                    navigationController.navigate("ReminderEdit")
+                }
+                .fillMaxWidth(),
+
+            ) {
+            val (dividerRef, iconRef, titleRef, messageRef, dateRef) = createRefs()
+            Divider(
+
+                Modifier.constrainAs(dividerRef) {
+                    top.linkTo(parent.top)
+                    centerHorizontallyTo(parent)
+                    width = Dimension.fillToConstraints
+                }
+            )
+
+            Text(
+                text = reminder.title,
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.constrainAs(titleRef) {
+                       linkTo(
+                           start = parent.start,
+                           end = parent.end,
+                           startMargin = 20.dp,
+                           endMargin = 0.dp
+                       )
+                    }
+            )
+
+            Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = null,
+                modifier = Modifier.size(23.dp).constrainAs(iconRef) {
+                    linkTo(
+                        start = parent.start,
+                        end = parent.end,
+                        startMargin = 75.dp,
+                        endMargin = 0.dp,
+                        bias = 0f
+                    )
+                }
+            )
+
         }
     }
 }
