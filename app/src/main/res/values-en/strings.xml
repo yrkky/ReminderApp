@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Reminder</string>
+
+    <string name="sign_up">Create new account</string>
+    <string name="create_new_account">Create account</string>
+    <string name="login">Log in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="fill_error">Fill in the required fields</string>
+
+    <string name="reminder_title">Reminder name</string>
+    <string name="reminder_message">Reminder message</string>
+    <string name="reminder_choose_category">Choose category</string>
+    <string name="reminder_category">Category</string>
+    <string name="reminder_choose_date">Choose date and time</string>
+    <string name="reminder_date">Date</string>
+    <string name="reminder_notification">Notification</string>
+
+    <string name="login_benefits">By logging in, you can synchronise data between multiple devices</string>
+    <string name="sign_up_benefits">By creating a user account, you can synchronise data between multiple devices</string>
+</resources>
