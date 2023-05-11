@@ -122,14 +122,15 @@ fun AddNote(
                     Button(
                         onClick = {
                             if (buttonEnabled()) {
-                                viewModel.addNote(
-                                    Note(
-                                        title = noteTitle.value,
-                                        message = noteMessage.value,
-                                        creationTime = LocalDateTime.now(),
-                                        categoryId = noteCategory.value.toLong()
+                                    viewModel.addNote(
+                                        Note(
+                                            title = noteTitle.value,
+                                            message = noteMessage.value,
+                                            creationTime = LocalDateTime.now(),
+                                            categoryId = getCategoryId(viewModel, noteCategory.value)
+                                        ),
                                     )
-                                )
+                                    navigationController.popBackStack()
                             } else {
                                 toastError(context)
                             }
@@ -252,9 +253,10 @@ fun AddNote(
                                 title = noteTitle.value,
                                 message = noteMessage.value,
                                 creationTime = LocalDateTime.now(),
-                                categoryId = noteCategory.value.toLong()
-                            )
+                                categoryId = getCategoryId(viewModel, noteCategory.value)
+                            ),
                         )
+                        navigationController.popBackStack()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -289,7 +291,7 @@ fun toastError(context: Context) {
 }
 
 
-private fun getCategoryId(viewModel: MainViewModel, categoryName: String): Long {
+private fun getCategoryId(viewModel: NoteViewModel, categoryName: String): Long {
     return viewModel.categories.value.first { it.name.lowercase() == categoryName.lowercase() }.categoryId
 }
 
