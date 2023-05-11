@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.syrjakoyrjanai.reminderapp.ui.home.Calendar
 import com.syrjakoyrjanai.reminderapp.ui.home.Home
 import com.syrjakoyrjanai.reminderapp.ui.home.Notes
 import com.syrjakoyrjanai.reminderapp.ui.home.Reminders
@@ -49,6 +50,9 @@ fun MainNavigation (){
         }
         composable(route = "addnotes") {
             AddNote(navigationController = navigationController)
+        }
+        composable(route = "calendar") {
+            Calendar(navigationController = navigationController)
         }
 
     }

@@ -1,12 +1,10 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,21 +28,16 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material.icons.outlined.Group
-import androidx.compose.material.icons.outlined.Help
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.ManageAccounts
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.PrivacyTip
-import androidx.compose.material.icons.outlined.SentimentSatisfied
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -54,10 +47,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.reminderapp.R
+import java.util.Calendar
+import java.util.Locale
 
 
 @Composable
-fun Settings(
+fun Calendar(
     navigationController: NavController,
 ) {
     Scaffold (
@@ -117,181 +112,11 @@ fun Settings(
                 .fillMaxSize()
                 .background(Color(255, 255, 255, 255))
         ) {
-            Row(
-                horizontalArrangement = Arrangement.Center
-            ){
-                Text(
-                    text = stringResource(R.string.settings),
-                    color = Color(0, 0, 0, 255),
-                    fontSize = 40.sp,
-                )
-            }
-            SettingsChoices(
-                modifier = Modifier
-            )
+            CalendarView()
         }
     }
 }
 
-
-@Composable
-fun SettingsChoices(
-    modifier: Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(10.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.ManageAccounts,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.users),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Notifications,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.notifications),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Group,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.personalization),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.PrivacyTip,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.privacy),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Help,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.help),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Color(255, 255, 255, 255))
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.SentimentSatisfied,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .offset(10.dp, 10.dp)
-            )
-            Text(
-                text = stringResource(R.string.about),
-                color = Color(0, 0, 0, 255),
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .offset(20.dp, 10.dp)
-            )
-        }
-    }
-}
 
 @Composable
 private fun BottomBar(
@@ -360,7 +185,6 @@ private fun BottomBar(
         navigationController = navigationController
     )
 }
-
 @Composable
 private fun popUpMenuButton(
     modifier: Modifier = Modifier,
@@ -412,6 +236,128 @@ private fun popUpMenuButton(
             }
             DropdownMenuItem(onClick = { navigationController.navigate("addnotes") }) {
                 Text(stringResource(R.string.add_note))
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalendarView(
+    modifier: Modifier = Modifier,
+    calendar: Calendar = Calendar.getInstance()
+    
+){
+    val calendar = Calendar.getInstance()
+    val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+    val year = calendar.get(Calendar.YEAR).toString()
+    val days = calendar.get(Calendar.DAY_OF_MONTH)
+    val firstDay = calendar.get(Calendar.DAY_OF_WEEK)
+    val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+    val currentMonth = calendar.get(Calendar.MONTH).toString()
+    val currentYear = calendar.get(Calendar.YEAR).toString()
+    
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(255, 255, 255, 255))
+    ) {
+        // Month
+        Row(
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "$month, $year",
+                color = Color(0, 0, 0, 255),
+                fontSize = 40.sp,
+            )
+        }
+
+        // Days of the week
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Sun",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Mon",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Tue",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Wed",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Thu",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Fri",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+            Text(
+                text = "Sat",
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+            )
+        }
+
+        // Days of the month
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            for (i in 1 until firstDay) {
+                Text(
+                    text = " ",
+                    color = Color(0, 0, 0, 255),
+                    fontSize = 20.sp,
+                )
+            }
+            for (i in 1..days) {
+                if (i == currentDay && month == currentMonth && year == currentYear) {
+                    Column(
+                        modifier = Modifier
+                            .background(Color(0, 0, 0, 255))
+                            .width(50.dp)
+                            .height(50.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "$i",
+                            color = Color(255, 255, 255, 255),
+                            fontSize = 20.sp,
+                        )
+                    }
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(50.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "$i",
+                            color = Color(0, 0, 0, 255),
+                            fontSize = 20.sp,
+                        )
+                    }
+                }
             }
         }
     }
