@@ -1,10 +1,15 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,12 +18,16 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FabPosition
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
@@ -55,16 +64,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Note
+import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewModel
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewState
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 
 @Composable
 fun Notes(
     navigationController: NavController,
     categoryViewModel: CategoryViewModel = hiltViewModel(),
-    reminderViewModel: MainViewModel = hiltViewModel(),
+    noteViewModel: NoteViewModel = hiltViewModel(),
 ) {
     val viewState by categoryViewModel.uiState.collectAsState()
 
@@ -79,7 +92,7 @@ fun Notes(
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
                     navigationController = navigationController,
-                    mainViewModel = reminderViewModel
+                    noteViewModel = noteViewModel
                 )
             }
         }
@@ -99,7 +112,7 @@ private fun NotesScreen(
     categories: List<Category>,
     onCategorySelected: (Category) -> Unit,
     navigationController: NavController,
-    mainViewModel: MainViewModel
+    noteViewModel: NoteViewModel
 ) {
     Scaffold (
 
@@ -126,8 +139,97 @@ private fun NotesScreen(
                 selectedCategory = selectedCategory!!,
                 onCategorySelected = onCategorySelected,
             )
-            Spacer(modifier = Modifier.height(20.dp))
 
+            NoteCards(
+                selectedCategory = selectedCategory,
+                noteViewModel = noteViewModel,
+                navigationController = navigationController
+            )
+
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun NoteCards(
+    selectedCategory: Category, 
+    noteViewModel: NoteViewModel, 
+    navigationController: NavController
+) {
+    noteViewModel.loadNotesFor(selectedCategory)
+
+    val noteViewState by noteViewModel.noteState.collectAsState()
+
+    when (noteViewState) {
+        is NoteViewState.Loading -> {}
+        is NoteViewState.Success -> {
+            val noteList = (noteViewState as NoteViewState.Success).data
+
+            LazyVerticalGrid(
+                cells = GridCells.Fixed(2),
+                contentPadding = PaddingValues(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.90f)
+            ) {
+                items(noteList) { item ->
+                    NoteCardsItem(
+                        note=item,
+                        navigationController=navigationController,
+                        modifier=Modifier,
+                        onClick={/*TODO*/},
+                        noteViewModel=noteViewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoteCardsItem(
+    note: Note,
+    navigationController: NavController,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    noteViewModel: NoteViewModel
+) {
+    val configuration = LocalConfiguration.current
+    val cardHeight= (configuration.screenHeightDp.dp) * 0.15f
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .clickable(onClick = onClick)
+            .height(cardHeight),
+        shape = RoundedCornerShape(10.dp),
+        elevation = 5.dp
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
+            Text(
+                text = note.title,
+                maxLines = 2,
+                style = MaterialTheme.typography.h6,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+            Text(
+                text = note.message,
+                maxLines = 2,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
         }
     }
 }

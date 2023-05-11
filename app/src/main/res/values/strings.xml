@@ -41,5 +41,13 @@
     <string name="search">Haku</string>
     <string name="add_reminder">Lisää muistutus</string>
     <string name="add_note">Lisää muistiinpano</string>
-    
+
+    <string name="settings">settings</string>
+    <string name="users">users</string>
+    <string name="notifications">notifications</string>
+    <string name="personalization">personalization</string>
+    <string name="privacy">privacy</string>
+    <string name="help">help</string>
+    <string name="about">about</string>
+
 </resources>

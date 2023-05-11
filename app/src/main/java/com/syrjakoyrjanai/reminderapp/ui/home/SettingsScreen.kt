@@ -1,10 +1,12 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,34 +15,32 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Surface
-import androidx.compose.material.Tab
-import androidx.compose.material.TabPosition
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Description
+import androidx.compose.material.icons.outlined.Group
+import androidx.compose.material.icons.outlined.Help
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.ManageAccounts
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.PrivacyTip
+import androidx.compose.material.icons.outlined.SentimentSatisfied
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,60 +49,61 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.reminderapp.R
-import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
-import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
-import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 
 
 @Composable
 fun Settings(
     navigationController: NavController,
-    categoryViewModel: CategoryViewModel = hiltViewModel(),
-    reminderViewModel: MainViewModel = hiltViewModel(),
-) {
-    val viewState by categoryViewModel.uiState.collectAsState()
-
-    when (viewState) {
-        is CategoryViewState.Success -> {
-            val selectedCategory = (viewState as CategoryViewState.Success).selectedCategory
-            val categories = (viewState as CategoryViewState.Success).data
-
-            Surface(modifier = Modifier.fillMaxSize()) {
-                SettingsScreen(
-                    selectedCategory = selectedCategory!!,
-                    categories = categories,
-                    onCategorySelected = categoryViewModel::onCategorySelected,
-                    navigationController = navigationController,
-                    mainViewModel = reminderViewModel
-                )
-            }
-        }
-        is CategoryViewState.Error -> {
-
-        }
-        is CategoryViewState.Loading -> {
-
-        }
-    }
-
-}
-
-@Composable
-private fun SettingsScreen(
-    selectedCategory: Category,
-    categories: List<Category>,
-    onCategorySelected: (Category) -> Unit,
-    navigationController: NavController,
-    mainViewModel: MainViewModel
 ) {
     Scaffold (
+
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color.White,
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Button(
+                        onClick = { navigationController.popBackStack() },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color(
+                                255,
+                                255,
+                                255,
+                                255
+                            )
+                        ),
+                        elevation = null,
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(125.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null
+                        )
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        // Back
+                        Text(
+                            text = stringResource(R.string.back),
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+
+
+            }
+        },
 
         bottomBar = {
             BottomBar(
@@ -116,7 +117,186 @@ private fun SettingsScreen(
                 .fillMaxSize()
                 .background(Color(255, 255, 255, 255))
         ) {
+            Row(
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = stringResource(R.string.settings),
+                    color = Color(0, 0, 0, 255),
+                    fontSize = 40.sp,
+                )
+            }
+            SettingsChoices(
+                modifier = Modifier
+            )
+        }
+    }
+}
 
+// list of setting choices
+// 1. users
+// 2. Notifications
+// 3. personalization
+// 4. privacy
+// 5. help
+// 6. about
+// there is a icon in front of each choice
+
+@Composable
+fun SettingsChoices(
+    modifier: Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.ManageAccounts,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.users),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Notifications,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.notifications),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Group,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.personalization),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.PrivacyTip,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.privacy),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Help,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.help),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color(255, 255, 255, 255))
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.SentimentSatisfied,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .offset(10.dp, 10.dp)
+            )
+            Text(
+                text = stringResource(R.string.about),
+                color = Color(0, 0, 0, 255),
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .offset(20.dp, 10.dp)
+            )
         }
     }
 }
