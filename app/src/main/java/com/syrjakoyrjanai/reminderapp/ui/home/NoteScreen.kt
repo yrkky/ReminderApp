@@ -255,7 +255,7 @@ private fun TopBar(
         Spacer(modifier = Modifier.weight(0.06f))
 
         IconButton(
-            onClick = { /*TODO*/ }
+            onClick = { navigationController.navigate("calendar") }
         ) {
             Icon(
                 imageVector = Icons.Outlined.CalendarToday,
