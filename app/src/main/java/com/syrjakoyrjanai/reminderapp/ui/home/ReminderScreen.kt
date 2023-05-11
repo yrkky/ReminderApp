@@ -1,10 +1,13 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,9 +16,13 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FabPosition
@@ -39,6 +46,8 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,11 +55,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.core.domain.entity.Category
@@ -59,6 +71,7 @@ import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
+import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
 
 @Composable
 fun Reminders(
@@ -127,6 +140,12 @@ private fun ReminderScreen(
                 onCategorySelected = onCategorySelected,
             )
             Spacer(modifier = Modifier.height(20.dp))
+
+            ReminderList(
+                selectedCategory = selectedCategory,
+                mainViewModel = mainViewModel,
+                navigationController = navigationController
+            )
 
         }
     }
@@ -239,11 +258,15 @@ private fun popUpMenuButton(
     navigationController: NavController
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    val configuration = LocalConfiguration.current
+    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 50.dp
+
     FloatingActionButton(
         onClick = { },
         modifier = Modifier
             .size(90.dp)
-            .offset(160.dp, (-40).dp),
+            .offset((halfScreenWidth), (-40).dp),
         backgroundColor = Color(217,217,217, 255),
         elevation = FloatingActionButtonDefaults.elevation(0.dp)
     ) {
@@ -255,7 +278,7 @@ private fun popUpMenuButton(
         modifier = Modifier
             .padding(10.dp)
             .size(70.dp)
-            .offset(160.dp, (-40).dp),
+            .offset((halfScreenWidth), (-40).dp),
         backgroundColor = Color(255,255,255, 255)
     ) {
         Icon(
@@ -361,5 +384,122 @@ private fun ChoiceChipContent(
             style = MaterialTheme.typography.body2,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
         )
+    }
+}
+
+
+@Composable
+private fun ReminderList(
+    selectedCategory: Category,
+    mainViewModel: MainViewModel,
+    navigationController: NavController
+) {
+    mainViewModel.loadRemindersFor(selectedCategory)
+
+    val reminderViewState by mainViewModel.reminderState.collectAsState()
+
+    when (reminderViewState) {
+        is ReminderViewState.Loading -> {}
+        is ReminderViewState.Success -> {
+            val reminderList = (reminderViewState as ReminderViewState.Success).data
+
+            Text(
+                text = stringResource(R.string.upcoming),
+                style = MaterialTheme.typography.h6
+            )
+
+            LazyColumn(
+                contentPadding = PaddingValues(0.dp),
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(reminderList) { item ->
+
+                    ReminderListItem(
+                        reminder = item,
+                        navigationController = navigationController,
+                        onClick = { /*TODO*/ },
+                        MainViewModel = mainViewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReminderListItem(
+    reminder: Reminder,
+    navigationController: NavController,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    MainViewModel: MainViewModel
+) {
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(10.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color(217,217,217, 255))
+    ) {
+        val (title, date, time, icon, delete) = createRefs()
+
+        Text(
+            text = reminder.title,
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier
+                .constrainAs(title) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+                .padding(10.dp)
+        )
+
+        Text(
+            text = reminder.reminderTime.toString(),
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier
+                .constrainAs(date) {
+                    top.linkTo(title.bottom)
+                    start.linkTo(parent.start)
+                }
+                .padding(10.dp)
+        )
+
+        IconButton(
+            onClick = { MainViewModel.deleteReminder(reminder) },
+            modifier = Modifier
+                .constrainAs(delete) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                }
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Delete,
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = Color(255, 0, 0, 255)
+            )
+        }
+
+        IconButton(
+            onClick = { navigationController.navigate("editreminder") },
+            modifier = Modifier
+                .constrainAs(icon) {
+                    top.linkTo(parent.top)
+                    end.linkTo(delete.start)
+                }
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Edit,
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = Color(0, 0, 0, 255)
+            )
+        }
     }
 }

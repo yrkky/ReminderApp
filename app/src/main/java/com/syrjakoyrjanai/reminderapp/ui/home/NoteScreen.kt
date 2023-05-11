@@ -47,6 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
@@ -237,11 +238,15 @@ private fun popUpMenuButton(
     navigationController: NavController
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    val configuration = LocalConfiguration.current
+    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 50.dp
+
     FloatingActionButton(
         onClick = { },
         modifier = Modifier
             .size(90.dp)
-            .offset(160.dp, (-40).dp),
+            .offset((halfScreenWidth), (-40).dp),
         backgroundColor = Color(217,217,217, 255),
         elevation = FloatingActionButtonDefaults.elevation(0.dp)
     ) {
@@ -253,7 +258,7 @@ private fun popUpMenuButton(
         modifier = Modifier
             .padding(10.dp)
             .size(70.dp)
-            .offset(160.dp, (-40).dp),
+            .offset((halfScreenWidth), (-40).dp),
         backgroundColor = Color(255,255,255, 255)
     ) {
         Icon(
