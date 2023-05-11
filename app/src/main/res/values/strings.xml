@@ -21,9 +21,14 @@
     <string name="reminder_date">Päivämäärä</string>
     <string name="reminder_notification">Ilmoitus</string>
 
+    <string name="reminder_made">Uusi ilmoitus luotu!</string>
+    <string name="reminder_will_remind">Muistutan %1$s %2$s</string>
+    <string name="reminder_now">Sinulla on muistutus %1$s</string>
+    <string name="reminder_made_fail">Ilmoitus epäonnistui</string>
+    <string name="reminder_notification_fail">Ilmoitus muistutukselle %1$s epäonnistui</string>
+
     <string name="login_benefits">Kirjautumalla sisään, voit synkronoida tiedot usean laitteen välillä</string>
     <string name="sign_up_benefits">Luomalla käyttäjätilin, voit synkronoida tiedot usean laitteen välillä</string>
-
 
     <string name="important">Tärkeät</string>
     <string name="upcoming">Tulevat</string>
