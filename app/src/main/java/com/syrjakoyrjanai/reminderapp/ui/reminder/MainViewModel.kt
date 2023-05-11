@@ -286,38 +286,38 @@ class MainViewModel @Inject constructor(
         Category(name = "Own Project 2"),
     )
 
-    private fun dummyData() : List<Reminder> {
-        return listOf(
-            Reminder(
-                title = "Wash dishes",
-                categoryId = 1,
-                reminderTime = LocalDateTime.now(),
-                creationTime = LocalDateTime.now(),
-                reminderSeen = LocalDateTime.now(),
-            ),
-            Reminder(
-                title = "Vacuum",
-                categoryId = 2,
-                reminderTime = LocalDateTime.now(),
-                creationTime = LocalDateTime.now(),
-                reminderSeen = LocalDateTime.now(),
-            ),
-            Reminder(
-                title = "Laundry",
-                categoryId = 3,
-                reminderTime = LocalDateTime.now(),
-                creationTime = LocalDateTime.now(),
-                reminderSeen = LocalDateTime.now(),
-            ),
-            Reminder(
-                title = "Do homework",
-                categoryId = 4,
-                reminderTime = LocalDateTime.now(),
-                creationTime = LocalDateTime.now(),
-                reminderSeen = LocalDateTime.now(),
-            )
-        )
-    }
+    //private fun dummyData() : List<Reminder> {
+    //    return listOf(
+    //        Reminder(
+    //            title = "Wash dishes",
+    //            categoryId = 1,
+    //            reminderTime = LocalDateTime.now(),
+    //            creationTime = LocalDateTime.now(),
+    //            reminderSeen = LocalDateTime.now(),
+    //        ),
+    //        Reminder(
+    //            title = "Vacuum",
+    //            categoryId = 2,
+    //            reminderTime = LocalDateTime.now(),
+    //            creationTime = LocalDateTime.now(),
+    //            reminderSeen = LocalDateTime.now(),
+    //        ),
+    //        Reminder(
+    //            title = "Laundry",
+    //            categoryId = 3,
+    //            reminderTime = LocalDateTime.now(),
+    //            creationTime = LocalDateTime.now(),
+    //            reminderSeen = LocalDateTime.now(),
+    //        ),
+    //        Reminder(
+    //            title = "Do homework",
+    //            categoryId = 4,
+    //            reminderTime = LocalDateTime.now(),
+    //            creationTime = LocalDateTime.now(),
+    //            reminderSeen = LocalDateTime.now(),
+    //        )
+    //    )
+    //}
 
     init {
         createNotificationChannel()
@@ -328,11 +328,11 @@ class MainViewModel @Inject constructor(
                 categoryRepository.addCategory(it)
             }
         }
-        dummyData().forEach {
-            viewModelScope.launch {
-                saveReminder(it, false)
-            }
-        }
+        //dummyData().forEach {
+        //    viewModelScope.launch {
+        //        saveReminder(it, false)
+        //    }
+        //}
         viewModelScope.launch {
             loadCategories()
         }
