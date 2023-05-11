@@ -21,6 +21,12 @@
     <string name="reminder_date">Date</string>
     <string name="reminder_notification">Notification</string>
 
+    <string name="reminder_made">New reminder made!</string>
+    <string name="reminder_will_remind">Will remind %1$s on %2$s</string>
+    <string name="reminder_now">You have reminder %1$s</string>
+    <string name="reminder_made_fail">Notification failed</string>
+    <string name="reminder_notification_fail">Notification for %1$s failed</string>
+
     <string name="login_benefits">By logging in, you can synchronise data between multiple devices</string>
     <string name="sign_up_benefits">By creating a user account, you can synchronise data between multiple devices</string>
 

@@ -7,7 +7,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.provider.Settings.Global.getString
 import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat.from
@@ -80,6 +83,7 @@ class MainViewModel @Inject constructor(
         _selectedCategory.value = category
     }
 
+    @Composable
     private fun notifyUserOfReminder(reminder: Reminder) {
         val formattedTime = LocalDateTime.parse(reminder.reminderTime.toString()).format(
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm"))
@@ -89,10 +93,10 @@ class MainViewModel @Inject constructor(
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("New Reminder made")
-            .setContentText("Will remind ${reminder.title} on ${formattedTime}")
+            .setContentTitle(stringResource(R.string.reminder_made))
+            .setContentText(stringResource(R.string.reminder_will_remind, reminder.title, formattedTime))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle("New Reminder made"))
+            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(stringResource(R.string.reminder_made)))
 
         with(from(Graph.appContext)) {
             if (ActivityCompat.checkSelfPermission(
@@ -159,6 +163,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
+    @Composable
     private fun createSuccessNotification(reminder: Reminder) {
         val notificationId = 10
         val intent = Intent()
@@ -174,11 +179,11 @@ class MainViewModel @Inject constructor(
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("You have reminder ${reminder.title}")
-            .setContentText("${reminder.title}")
+            .setContentTitle(stringResource(R.string.reminder_now, reminder.title))
+            .setContentText(reminder.title)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
-            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle("${reminder.title}"))
+            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(stringResource(R.string.reminder_now, reminder.title)))
 
         with(from(Graph.appContext)) {
             if (ActivityCompat.checkSelfPermission(
@@ -192,6 +197,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    @Composable
     private fun createFailureNotification(reminder: Reminder) {
         val notificationId = 10
         val builder = NotificationCompat.Builder(
@@ -199,8 +205,8 @@ class MainViewModel @Inject constructor(
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Notification failed")
-            .setContentText("Notification for ${reminder.title} failed")
+            .setContentTitle(stringResource(R.string.reminder_made_fail))
+            .setContentText(stringResource(R.string.reminder_notification_fail, reminder.title))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(from(Graph.appContext)) {
