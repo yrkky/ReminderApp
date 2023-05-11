@@ -46,7 +46,6 @@ fun AddReminder(
     val context = LocalContext.current
 
     val reminderTitle = remember { mutableStateOf("") }
-    val reminderMessage = remember { mutableStateOf("") }
     val reminderCategory = remember { mutableStateOf("") }
     val reminderTime = remember { mutableStateOf("") }
     val shouldNotify = remember { mutableStateOf(true) }
@@ -55,8 +54,7 @@ fun AddReminder(
         return (
                 reminderTitle.value.isNotEmpty() &&
                 reminderCategory.value.isNotEmpty() &&
-                reminderTime.value.isNotEmpty() &&
-                reminderMessage.value.isNotEmpty()
+                reminderTime.value.isNotEmpty()
                 )
     }
 
