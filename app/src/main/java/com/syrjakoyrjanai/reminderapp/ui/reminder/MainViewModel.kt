@@ -9,7 +9,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.provider.Settings.Global.getString
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -72,6 +74,7 @@ class MainViewModel @Inject constructor(
         return editReminder
     }
 
+
     fun editReminder(reminder: Reminder) {
         viewModelScope.launch {
             reminderRepository.editReminder(reminder)
@@ -83,20 +86,21 @@ class MainViewModel @Inject constructor(
         _selectedCategory.value = category
     }
 
-    @Composable
     private fun notifyUserOfReminder(reminder: Reminder) {
         val formattedTime = LocalDateTime.parse(reminder.reminderTime.toString()).format(
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm"))
         val notificationId = 10
+        val text_remindermade = UiText.StringResource(R.string.reminder_made)
+        val text_willremind = UiText.StringResource(R.string.reminder_will_remind, reminder.title, formattedTime)
         val builder = NotificationCompat.Builder(
             Graph.appContext,
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(stringResource(R.string.reminder_made))
-            .setContentText(stringResource(R.string.reminder_will_remind, reminder.title, formattedTime))
+            .setContentTitle(text_remindermade.toString())
+            .setContentText(text_willremind.toString())
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(stringResource(R.string.reminder_made)))
+            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(text_remindermade.toString()))
 
         with(from(Graph.appContext)) {
             if (ActivityCompat.checkSelfPermission(
@@ -163,7 +167,6 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    @Composable
     private fun createSuccessNotification(reminder: Reminder) {
         val notificationId = 10
         val intent = Intent()
@@ -173,17 +176,18 @@ class MainViewModel @Inject constructor(
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
+        val text_remindernow = UiText.StringResource(R.string.reminder_now, reminder.title)
 
         val builder = NotificationCompat.Builder(
             Graph.appContext,
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle(stringResource(R.string.reminder_now, reminder.title))
+            .setContentTitle(text_remindernow.toString())
             .setContentText(reminder.title)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
-            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(stringResource(R.string.reminder_now, reminder.title)))
+            .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle(text_remindernow.toString()))
 
         with(from(Graph.appContext)) {
             if (ActivityCompat.checkSelfPermission(
@@ -197,16 +201,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    @Composable
     private fun createFailureNotification(reminder: Reminder) {
         val notificationId = 10
+        val text_remindermadefail = UiText.StringResource(R.string.reminder_made_fail)
+        val text_notificationfail = UiText.StringResource(R.string.reminder_notification_fail, reminder.title)
         val builder = NotificationCompat.Builder(
             Graph.appContext,
             "channel_id"
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle(stringResource(R.string.reminder_made_fail))
-            .setContentText(stringResource(R.string.reminder_notification_fail, reminder.title))
+            .setContentTitle(text_notificationfail.toString())
+            .setContentText(text_notificationfail.toString())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(from(Graph.appContext)) {
@@ -330,6 +335,28 @@ class MainViewModel @Inject constructor(
         }
         viewModelScope.launch {
             loadCategories()
+        }
+    }
+}
+
+sealed class UiText {
+
+    data class StringValue(val str: String) : UiText()
+
+    class StringResource(
+        @StringRes val resourceId: Int,
+        vararg val args: Any
+    ) : UiText()
+
+    @Composable
+    fun asString(): String {
+        return when (this) {
+            is StringValue -> {
+                str
+            }
+            is StringResource -> {
+                stringResource(id = resourceId, formatArgs = args)
+            }
         }
     }
 }
