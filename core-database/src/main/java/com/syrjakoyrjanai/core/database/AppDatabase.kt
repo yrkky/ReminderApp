@@ -4,13 +4,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.syrjakoyrjanai.core.database.dao.CategoryDao
+import com.syrjakoyrjanai.core.database.dao.NoteDao
 import com.syrjakoyrjanai.core.database.dao.ReminderDao
 import com.syrjakoyrjanai.core.database.entity.CategoryEntity
+import com.syrjakoyrjanai.core.database.entity.NoteEntity
 import com.syrjakoyrjanai.core.database.entity.ReminderEntity
 import com.syrjakoyrjanai.core.database.utils.Converter
 
 @Database(
-    entities = [ReminderEntity::class, CategoryEntity::class],
+    entities = [ReminderEntity::class, CategoryEntity::class, NoteEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -19,4 +21,5 @@ import com.syrjakoyrjanai.core.database.utils.Converter
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reminderDao(): ReminderDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun noteDao(): NoteDao
 }

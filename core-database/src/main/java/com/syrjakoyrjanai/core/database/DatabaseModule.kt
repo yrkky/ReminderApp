@@ -3,6 +3,7 @@ package com.syrjakoyrjanai.core.database
 import android.content.Context
 import androidx.room.Room
 import com.syrjakoyrjanai.core.database.dao.CategoryDao
+import com.syrjakoyrjanai.core.database.dao.NoteDao
 import com.syrjakoyrjanai.core.database.dao.ReminderDao
 import dagger.Module
 import dagger.Provides
@@ -23,6 +24,11 @@ class DatabaseModule {
     @Provides
     fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao {
         return appDatabase.categoryDao()
+    }
+
+    @Provides
+    fun provideNoteDao(appDatabase: AppDatabase): NoteDao {
+        return appDatabase.noteDao()
     }
 
     @Provides
