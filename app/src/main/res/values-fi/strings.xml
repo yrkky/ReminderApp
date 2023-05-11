@@ -27,6 +27,11 @@
     <string name="reminder_made_fail">Ilmoitus epäonnistui</string>
     <string name="reminder_notification_fail">Ilmoitus muistutukselle %1$s epäonnistui</string>
 
+    <string name="note_title">Muistiinpanon nimi</string>
+    <string name="note_message">Muistiinpanon viesti</string>
+    <string name="note_choose_category">Valitse kategoria</string>
+    <string name="note_category">Kategoria</string>
+
     <string name="login_benefits">Kirjautumalla sisään, voit synkronoida tiedot usean laitteen välillä</string>
     <string name="sign_up_benefits">Luomalla käyttäjätilin, voit synkronoida tiedot usean laitteen välillä</string>
 

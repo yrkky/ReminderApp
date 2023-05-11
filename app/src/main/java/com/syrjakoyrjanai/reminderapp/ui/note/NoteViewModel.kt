@@ -41,7 +41,7 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-    private fun addNote(note: Note) {
+    fun addNote(note: Note) {
         viewModelScope.launch {
             noteRepository.addNote(note)
         }

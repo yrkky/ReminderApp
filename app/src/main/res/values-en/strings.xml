@@ -21,6 +21,11 @@
     <string name="reminder_date">Date</string>
     <string name="reminder_notification">Notification</string>
 
+    <string name="note_title">Note name</string>
+    <string name="note_message">Note message</string>
+    <string name="note_choose_category">Choose category</string>
+    <string name="note_category">Category</string>
+
     <string name="reminder_made">New reminder made!</string>
     <string name="reminder_will_remind">Will remind %1$s on %2$s</string>
     <string name="reminder_now">You have reminder %1$s</string>

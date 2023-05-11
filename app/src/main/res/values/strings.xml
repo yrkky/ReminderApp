@@ -21,6 +21,11 @@
     <string name="reminder_date">Päivämäärä</string>
     <string name="reminder_notification">Ilmoitus</string>
 
+    <string name="note_title">Muistiinpanon nimi</string>
+    <string name="note_message">Muistiinpanon viesti</string>
+    <string name="note_choose_category">Valitse kategoria</string>
+    <string name="note_category">Kategoria</string>
+
     <string name="reminder_made">Uusi ilmoitus luotu!</string>
     <string name="reminder_will_remind">Muistutan %1$s %2$s</string>
     <string name="reminder_now">Sinulla on muistutus %1$s</string>
