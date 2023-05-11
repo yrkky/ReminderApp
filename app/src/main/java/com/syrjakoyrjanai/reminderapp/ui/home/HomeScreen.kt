@@ -71,6 +71,7 @@ import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.R
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
 
@@ -80,6 +81,7 @@ fun Home(
     navigationController: NavController,
     categoryViewModel: CategoryViewModel = hiltViewModel(),
     reminderViewModel: MainViewModel = hiltViewModel(),
+    noteViewModel: NoteViewModel = hiltViewModel(),
 ) {
     val viewState by categoryViewModel.uiState.collectAsState()
 
@@ -94,7 +96,8 @@ fun Home(
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
                     navigationController = navigationController,
-                    mainViewModel = reminderViewModel
+                    mainViewModel = reminderViewModel,
+                    noteViewModel = noteViewModel,
                 )
             }
         }
@@ -114,7 +117,8 @@ fun HomeScreen(
     categories: List<Category>,
     onCategorySelected: (Category) -> Unit,
     navigationController: NavController,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    noteViewModel: NoteViewModel
 ){
     Scaffold (
 
