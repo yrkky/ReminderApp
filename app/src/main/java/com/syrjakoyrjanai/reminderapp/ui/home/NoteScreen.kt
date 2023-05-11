@@ -240,7 +240,7 @@ private fun popUpMenuButton(
     var expanded by remember { mutableStateOf(false) }
 
     val configuration = LocalConfiguration.current
-    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 50.dp
+    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 40.dp
 
     FloatingActionButton(
         onClick = { },

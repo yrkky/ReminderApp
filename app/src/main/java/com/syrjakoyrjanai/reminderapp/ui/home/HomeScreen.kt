@@ -153,6 +153,7 @@ fun HomeScreen(
                 navigationController = navigationController,
                 mainViewModel = mainViewModel
             )
+            Spacer(modifier = Modifier.height(8.dp))
             quickNoteBox(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -351,7 +352,7 @@ private fun popUpMenuButton(
     var expanded by remember { mutableStateOf(false) }
 
     val configuration = LocalConfiguration.current
-    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 50.dp
+    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 40.dp
 
     FloatingActionButton(
         onClick = { },
@@ -552,6 +553,7 @@ private fun importantReminderListItem(
 
             Text(
                 text = reminder.title,
+                maxLines = 1,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.constrainAs(titleRef) {
                        linkTo(
@@ -604,7 +606,7 @@ private fun quickNoteBox(
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color(217,217,217, 255))
                 .fillMaxWidth()
-                .fillMaxHeight(0.5f).background(Color(217, 217, 217, 255))
+                .fillMaxHeight(0.7f).background(Color(217, 217, 217, 255))
             ,
             value = textbox.value,
             onValueChange = { text -> textbox.value = text },
