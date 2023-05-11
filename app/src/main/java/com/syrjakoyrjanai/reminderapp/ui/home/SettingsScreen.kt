@@ -143,7 +143,6 @@ private fun BottomBar(
                 imageVector = Icons.Outlined.Home,
                 contentDescription = null,
                 Modifier.size(50.dp),
-                tint = Color(255, 0, 0, 255)
             )
         }
 
@@ -179,7 +178,8 @@ private fun BottomBar(
             Icon(
                 imageVector = Icons.Outlined.Settings,
                 contentDescription = null,
-                Modifier.size(50.dp)
+                Modifier.size(50.dp),
+                tint = Color(255, 0, 0, 255)
             )
         }
     }
