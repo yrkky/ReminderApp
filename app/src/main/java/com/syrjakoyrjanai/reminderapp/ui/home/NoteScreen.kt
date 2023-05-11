@@ -178,8 +178,7 @@ private fun BottomBar(
 
         IconButton(
             onClick = {
-                // Already in home?
-                // navigationController.navigate("home")
+                navigationController.navigate("home")
             }
         ) {
             Icon(
