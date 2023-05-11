@@ -418,7 +418,8 @@ private fun upcomingReminders(
 
             Text(
                 text = stringResource(R.string.upcoming),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(10.dp)
             )
 
             LazyRow(
@@ -449,10 +450,13 @@ private fun ReminderListItem(
     onClick: () -> Unit,
     MainViewModel: MainViewModel
 ) {
+    val configuration = LocalConfiguration.current
+    val cardWidth = (configuration.screenWidthDp.dp)/(3.5f)
+
     Card(
         modifier = modifier
             .padding(10.dp)
-            .size(100.dp),
+            .size(cardWidth),
         shape = RoundedCornerShape(10.dp),
         backgroundColor = Color(217,217,217, 255)
     ) {
@@ -494,7 +498,8 @@ private fun importantReminders(
 
             Text(
                 text = stringResource(R.string.important),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(10.dp)
             )
 
             LazyRow(
@@ -525,10 +530,12 @@ private fun importantReminderListItem(
     onClick: () -> Unit,
     MainViewModel: MainViewModel
 ) {
+    val configuration = LocalConfiguration.current
+    val cardWidth = (configuration.screenWidthDp.dp)/(3.5f)
     Card(
         modifier = modifier
             .padding(10.dp)
-            .size(100.dp),
+            .size(cardWidth),
         shape = RoundedCornerShape(10.dp),
         backgroundColor = Color(217,217,217, 255)
     ) {
@@ -573,7 +580,7 @@ private fun importantReminderListItem(
                     linkTo(
                         start = parent.start,
                         end = parent.end,
-                        startMargin = 75.dp,
+                        startMargin = cardWidth * 0.8f,
                         endMargin = 0.dp,
                         bias = 0f
                     )
