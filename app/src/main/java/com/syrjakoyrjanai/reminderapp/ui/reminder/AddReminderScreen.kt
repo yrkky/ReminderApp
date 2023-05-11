@@ -1,11 +1,16 @@
 package com.syrjakoyrjanai.reminderapp.ui.reminder
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -27,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.systemBarsPadding
@@ -49,6 +55,11 @@ fun AddReminder(
     val reminderCategory = remember { mutableStateOf("") }
     val reminderTime = remember { mutableStateOf("") }
     val shouldNotify = remember { mutableStateOf(true) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = {}
+    )
 
     fun buttonEnabled(): Boolean {
         return (
@@ -105,6 +116,14 @@ fun AddReminder(
                     Button(
                         onClick = {
                             if (buttonEnabled()) {
+                                // Ask permissions to notify
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    requestPermission(
+                                        context = context,
+                                        permission = Manifest.permission.POST_NOTIFICATIONS,
+                                        requestPermission = { launcher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+                                    )
+                                }
                                 // Save the reminder
                                 viewModel.saveReminder(
                                     Reminder(
@@ -221,6 +240,15 @@ fun AddReminder(
 
                 Button(
                     onClick = {
+                        // Ask permissions to notify
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            requestPermission(
+                                context = context,
+                                permission = Manifest.permission.POST_NOTIFICATIONS,
+                                requestPermission = { launcher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+                            )
+                        }
+                        //Save reminder
                         viewModel.saveReminder(
                             Reminder(
                                 title = reminderTitle.value,
@@ -411,6 +439,20 @@ private fun DatePicker(
             },
         )
 
+    }
+}
+
+private fun requestPermission(
+    context: Context,
+    permission: String,
+    requestPermission: () -> Unit
+) {
+    if (ContextCompat.checkSelfPermission(
+            context,
+            permission
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        requestPermission()
     }
 }
 
