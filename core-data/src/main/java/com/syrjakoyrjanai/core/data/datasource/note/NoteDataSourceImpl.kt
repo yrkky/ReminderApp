@@ -45,7 +45,6 @@ class NoteDataSourceImpl @Inject constructor(
         title = this.title,
         message = this.message,
         creationTime = this.creationTime,
-        creatorId = this.creatorId,
         categoryId = this.categoryId,
     )
 
@@ -55,7 +54,6 @@ class NoteDataSourceImpl @Inject constructor(
         message = this.message,
         creationTime = this.creationTime,
         categoryId = this.categoryId,
-        creatorId = this.creatorId,
     )
 
 }

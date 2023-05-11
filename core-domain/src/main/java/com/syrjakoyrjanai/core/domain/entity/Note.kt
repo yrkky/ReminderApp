@@ -7,6 +7,5 @@ data class Note(
     val title: String,
     val message: String,
     val categoryId: Long,
-    val creationTime: LocalDateTime,
-    val creatorId: Long,
+    val creationTime: LocalDateTime
 )

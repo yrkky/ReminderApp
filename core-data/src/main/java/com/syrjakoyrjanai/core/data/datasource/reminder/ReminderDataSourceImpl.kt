@@ -45,8 +45,7 @@ class ReminderDataSourceImpl @Inject constructor(
         reminderTime = this.reminderTime,
         creationTime = this.creationTime,
         categoryId = this.categoryId,
-        reminderSeen = this.reminderSeen,
-    )
+        reminderSeen = this.reminderSeen,)
 
     private fun ReminderEntity.fromEntity() = Reminder(
         reminderId = this.reminderId,
@@ -54,7 +53,6 @@ class ReminderDataSourceImpl @Inject constructor(
         reminderTime = this.reminderTime,
         creationTime = this.creationTime,
         categoryId = this.categoryId,
-        creatorId = this.creatorId,
         reminderSeen = this.reminderSeen,
     )
 

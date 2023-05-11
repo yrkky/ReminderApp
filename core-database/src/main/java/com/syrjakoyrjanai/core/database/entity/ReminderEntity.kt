@@ -26,7 +26,6 @@ data class ReminderEntity(
     val title: String,
     val reminderTime: LocalDateTime,
     val creationTime: LocalDateTime,
-    val creatorId: Long,
     @ColumnInfo(name = "category_id")
     val categoryId: Long,
     val reminderSeen: LocalDateTime,

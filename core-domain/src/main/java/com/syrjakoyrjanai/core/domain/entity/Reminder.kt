@@ -8,6 +8,5 @@ data class Reminder(
     val categoryId: Long,
     val reminderTime: LocalDateTime,
     val creationTime: LocalDateTime,
-    val creatorId: Long,
     val reminderSeen: LocalDateTime,
 )

@@ -282,7 +282,6 @@ class MainViewModel @Inject constructor(
                 categoryId = 1,
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
             ),
             Reminder(
@@ -290,7 +289,6 @@ class MainViewModel @Inject constructor(
                 categoryId = 2,
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
             ),
             Reminder(
@@ -298,7 +296,6 @@ class MainViewModel @Inject constructor(
                 categoryId = 3,
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
             ),
             Reminder(
@@ -306,7 +303,6 @@ class MainViewModel @Inject constructor(
                 categoryId = 4,
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
             )
         )

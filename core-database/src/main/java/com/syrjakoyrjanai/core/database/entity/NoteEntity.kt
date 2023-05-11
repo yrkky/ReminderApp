@@ -26,7 +26,6 @@ data class NoteEntity(
     val title: String,
     val message: String,
     val creationTime: LocalDateTime,
-    val creatorId: Long,
     @ColumnInfo(name = "category_id")
     val categoryId: Long,
 )
