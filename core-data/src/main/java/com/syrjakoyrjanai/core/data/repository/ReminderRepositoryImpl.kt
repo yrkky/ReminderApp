@@ -3,6 +3,7 @@ package com.syrjakoyrjanai.core.data.repository
 import com.syrjakoyrjanai.core.data.datasource.reminder.ReminderDataSource
 import com.syrjakoyrjanai.core.domain.entity.Category
 import com.syrjakoyrjanai.core.domain.entity.Reminder
+import com.syrjakoyrjanai.core.domain.entity.ReminderLong
 import com.syrjakoyrjanai.core.domain.repository.ReminderRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -63,9 +63,7 @@ fun ReminderList(
                     "Upcoming" -> {selectedStateReminders = upcomingReminders}
                     "All" -> {selectedStateReminders = reminderList}
                 }
-                if (filterNearby.value) {
-                    selectedStateReminders = filterNearbyReminders(selectedStateReminders, latitude.value, longitude.value)
-                }
+
                 items(selectedStateReminders) { item ->
                     //val reminder_calendartime = Calendar.getInstance()
                     //reminder_calendartime.set(item.reminderTime.year, item.reminderTime.monthValue-1, item.reminderTime.dayOfMonth, item.reminderTime.hour, item.reminderTime.minute)
@@ -85,20 +83,20 @@ fun ReminderList(
 
 }
 
-private fun filterNearbyReminders(reminders: List<Reminder>, latitude: Double, longitude: Double): List<Reminder> {
-    val nearbyReminders = reminders.filter { reminder ->
-        if (reminder.location_x == null || reminder.location_y == null) {
-            return@filter false
-        }
-
-        val latitudeDifference = kotlin.math.abs(reminder.location_x - latitude)
-        val longitudeDifference = kotlin.math.abs(reminder.location_y - longitude)
-
-        // reminder that are inside ~1km
-        latitudeDifference <= 0.009009 && longitudeDifference <= 0.009009
-    }
-    return nearbyReminders
-}
+// private fun filterNearbyReminders(reminders: List<Reminder>, latitude: Double, longitude: Double): List<Reminder> {
+//     val nearbyReminders = reminders.filter { reminder ->
+//         if (reminder.location_x == null || reminder.location_y == null) {
+//             return@filter false
+//         }
+//
+//         val latitudeDifference = kotlin.math.abs(reminder.location_x - latitude)
+//         val longitudeDifference = kotlin.math.abs(reminder.location_y - longitude)
+//
+//         // reminder that are inside ~1km
+//         latitudeDifference <= 0.009009 && longitudeDifference <= 0.009009
+//     }
+//     return nearbyReminders
+// }
 
 
 @Composable
@@ -126,10 +124,10 @@ private fun ReminderListItem(
         )
 
         // title
-        Icon(
-            imageVector = nameToIcon(reminder.icon),
-            contentDescription = null,
-        )
+        //Icon(
+        //    imageVector = nameToIcon(reminder.icon),
+         //   contentDescription = null,
+        //)
 
         Text(
             text = reminder.title,

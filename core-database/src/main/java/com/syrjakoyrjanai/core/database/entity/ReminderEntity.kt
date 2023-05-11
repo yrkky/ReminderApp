@@ -24,14 +24,27 @@ data class ReminderEntity(
     @PrimaryKey(autoGenerate = true)
     val reminderId: Long = 0,
     val title: String,
-    val message: String,
-    val location_x: Double,
-    val location_y: Double,
     val reminderTime: LocalDateTime,
     val creationTime: LocalDateTime,
     val creatorId: Long,
     @ColumnInfo(name = "category_id")
     val categoryId: Long,
     val reminderSeen: LocalDateTime,
-    val icon: String,
 )
+
+
+//data class ReminderEntity(
+//    @PrimaryKey(autoGenerate = true)
+//    val reminderId: Long = 0,
+//    val title: String,
+//    val message: String,
+//    val location_x: Double,
+//    val location_y: Double,
+//    val reminderTime: LocalDateTime,
+//    val creationTime: LocalDateTime,
+//    val creatorId: Long,
+//    @ColumnInfo(name = "category_id")
+//    val categoryId: Long,
+//    val reminderSeen: LocalDateTime,
+//    val icon: String,
+//)

@@ -175,7 +175,7 @@ class MainViewModel @Inject constructor(
         )
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle("You have reminder ${reminder.title}")
-            .setContentText("${reminder.message}")
+            //.setContentText("${reminder.message}")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setStyle(NotificationCompat.BigPictureStyle().setBigContentTitle("${reminder.title}"))
@@ -280,50 +280,50 @@ class MainViewModel @Inject constructor(
             Reminder(
                 title = "Wash dishes",
                 categoryId = 1,
-                message = "This is a description of a reminder",
+                //message = "This is a description of a reminder",
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                location_x = 65.2514,
-                location_y = 47.2541,
+                //location_x = 65.2514,
+                //location_y = 47.2541,
                 creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
-                icon = "error"
+                //icon = "error"
             ),
             Reminder(
                 title = "Vacuum",
                 categoryId = 2,
-                message = "This is a description of a reminder",
+                //message = "This is a description of a reminder",
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                location_x = 65.2514,
-                location_y = 47.2541,
+                //location_x = 65.2514,
+                //location_y = 47.2541,
                 creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
-                icon = "warning",
+                //icon = "warning",
             ),
             Reminder(
                 title = "Laundry",
                 categoryId = 3,
-                message = "This is a description of a reminder",
+                //message = "This is a description of a reminder",
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                location_x = 65.2514,
-                location_y = 47.2541,
+                //location_x = 65.2514,
+                //location_y = 47.2541,
                 creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
-                icon = "important",
+                //icon = "important",
             ),
             Reminder(
                 title = "Do homework",
                 categoryId = 4,
-                message = "This is a description of a reminder",
+                //message = "This is a description of a reminder",
                 reminderTime = LocalDateTime.now(),
                 creationTime = LocalDateTime.now(),
-                location_x = 65.2514,
-                location_y = 47.2541,
+                //location_x = 65.2514,
+                //location_y = 47.2541,
                 creatorId = 1,
                 reminderSeen = LocalDateTime.now(),
-                icon = "star",
+                // icon = "star",
             )
         )
     }
