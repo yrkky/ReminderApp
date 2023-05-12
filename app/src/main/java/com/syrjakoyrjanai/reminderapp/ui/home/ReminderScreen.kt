@@ -43,6 +43,7 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -474,26 +475,9 @@ private fun ReminderListItem(
                 .padding(10.dp)
         ) {
             Icon(
-                imageVector = Icons.Rounded.Delete,
+                imageVector = Icons.Rounded.Done,
                 contentDescription = null,
-                modifier = Modifier.size(30.dp),
-                tint = Color(255, 0, 0, 255)
-            )
-        }
-
-        IconButton(
-            onClick = { navigationController.navigate("editreminder") },
-            modifier = Modifier
-                .constrainAs(icon) {
-                    top.linkTo(parent.top)
-                    end.linkTo(delete.start)
-                }
-                .padding(10.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.Edit,
-                contentDescription = null,
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(40.dp),
                 tint = Color(0, 0, 0, 255)
             )
         }

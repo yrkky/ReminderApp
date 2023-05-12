@@ -1,12 +1,10 @@
 package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,17 +36,18 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.SentimentSatisfied
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -117,15 +116,18 @@ fun Settings(
                 .fillMaxSize()
                 .background(Color(255, 255, 255, 255))
         ) {
-            Row(
-                horizontalArrangement = Arrangement.Center
-            ){
-                Text(
-                    text = stringResource(R.string.settings),
-                    color = Color(0, 0, 0, 255),
-                    fontSize = 40.sp,
-                )
-            }
+            Text(
+                text = stringResource(R.string.settings),
+                color = Color(0, 0, 0, 255),
+                fontSize = 40.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .align(Alignment.CenterHorizontally)
+
+            )
+            Spacer(modifier = Modifier.height(80.dp))
+
             SettingsChoices(
                 modifier = Modifier
             )
@@ -142,6 +144,7 @@ fun SettingsChoices(
         modifier = modifier
             .fillMaxSize()
             .padding(10.dp)
+
     ) {
         Row(
             modifier = Modifier
