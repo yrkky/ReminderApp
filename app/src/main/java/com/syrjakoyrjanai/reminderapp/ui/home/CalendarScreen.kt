@@ -56,7 +56,6 @@ fun Calendar(
     navigationController: NavController,
 ) {
     Scaffold (
-
         topBar = {
             TopAppBar(
                 backgroundColor = Color.White,

@@ -76,6 +76,7 @@ fun Reminders(
     categoryViewModel: CategoryViewModel = hiltViewModel(),
     reminderViewModel: MainViewModel = hiltViewModel(),
 ) {
+
     val viewState by categoryViewModel.uiState.collectAsState()
 
     when (viewState) {
@@ -391,7 +392,12 @@ private fun ReminderList(
     mainViewModel: MainViewModel,
     navigationController: NavController
 ) {
-    mainViewModel.loadRemindersFor(selectedCategory)
+
+    if (selectedCategory.name == "All") {
+        mainViewModel.loadAllReminders()
+    } else {
+        mainViewModel.loadRemindersFor(selectedCategory)
+    }
 
     val reminderViewState by mainViewModel.reminderState.collectAsState()
 
