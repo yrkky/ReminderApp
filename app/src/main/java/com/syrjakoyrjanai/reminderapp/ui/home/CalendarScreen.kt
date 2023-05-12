@@ -175,7 +175,6 @@ private fun BottomBar(
                 imageVector = Icons.Outlined.Settings,
                 contentDescription = null,
                 Modifier.size(50.dp),
-                tint = Color(255, 0, 0, 255)
             )
         }
     }
