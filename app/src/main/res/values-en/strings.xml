@@ -53,7 +53,6 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="sort">Sort</string>
-
-
-
+    <string name="login_google">Log In with Google</string>
+    
 </resources>
