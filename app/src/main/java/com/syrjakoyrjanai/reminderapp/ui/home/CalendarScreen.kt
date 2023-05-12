@@ -229,7 +229,7 @@ private fun popUpMenuButton(
             modifier = modifier,
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            offset = DpOffset(120.dp, (5).dp)
+            offset = DpOffset((halfScreenWidth * 0.8f), (5).dp)
         ) {
             DropdownMenuItem(onClick = { navigationController.navigate("addreminder") }) {
                 Text(stringResource(R.string.add_reminder))
