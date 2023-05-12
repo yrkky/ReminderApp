@@ -13,32 +13,44 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EditCalendar
+import androidx.compose.material.icons.filled.Radar
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.ArrowDropUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.systemBarsPadding
 import com.syrjakoyrjanai.core.domain.entity.Category
+import com.syrjakoyrjanai.core.domain.entity.Note
 import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.R
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewModel
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewState
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -48,6 +60,7 @@ import java.util.*
 fun AddReminder(
     navigationController: NavController,
     viewModel: MainViewModel = hiltViewModel(),
+    noteViewModel: NoteViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -231,12 +244,20 @@ fun AddReminder(
                     modifier = Modifier.align(Alignment.Start)
                 )
                 Spacer(modifier = Modifier.height(5.dp))
+
                 CategoryListDropdown(
                     viewModel = viewModel,
                     category = reminderCategory
                 )
 
-                Spacer(modifier = Modifier.height(300.dp))
+                Spacer(modifier = Modifier.height(100.dp))
+
+                NotesRow(
+                    noteViewModel = noteViewModel,
+                    navigationController = navigationController
+                )
+
+                Spacer(modifier = Modifier.fillMaxHeight(0.7f))
 
                 Button(
                     onClick = {
@@ -279,6 +300,121 @@ fun AddReminder(
 
 }
 
+@Composable
+private fun NotesRow(
+    noteViewModel: NoteViewModel,
+    navigationController: NavController
+) {
+    val noteViewState by noteViewModel.noteState.collectAsState()
+
+    noteViewModel.loadAllNotes()
+
+    when (noteViewState) {
+        is NoteViewState.Loading -> {}
+        is NoteViewState.Success -> {
+            val noteList = (noteViewState as NoteViewState.Success).data
+
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.50f)
+            ) {
+                items(noteList) { item ->
+                    NoteCardsItem(
+                        note = item,
+                        navigationController = navigationController,
+                        modifier = Modifier,
+                        onClick = {/*TODO*/ },
+                        noteViewModel = noteViewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoteCardsItem(
+    note: Note,
+    navigationController: NavController,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    noteViewModel: NoteViewModel
+) {
+    val configuration = LocalConfiguration.current
+    val cardWith = (configuration.screenWidthDp.dp) * 0.3f * 1.4f
+    val cardHeight= (configuration.screenHeightDp.dp) * 0.14f * 1.4f
+
+    Card(
+        modifier = modifier
+            .padding(10.dp)
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(10.dp),
+        elevation = 5.dp,
+        backgroundColor = Color(217,217,217, 255)
+    ) {
+        ConstraintLayout(
+            modifier = Modifier
+                .width(cardWith)
+                .height(cardHeight),
+        ) {
+            val (title, content, selectButton) = createRefs()
+
+            Text(
+                text = note.title,
+                maxLines = 2,
+                style = MaterialTheme.typography.h6,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .constrainAs(title) {
+                        top.linkTo(parent.top, margin = 10.dp)
+                        start.linkTo(parent.start, margin = 10.dp)
+                        end.linkTo(parent.end, margin = 10.dp)
+                    }
+                    .padding(10.dp)
+            )
+
+            var selected = remember { mutableStateOf(false) }
+
+            IconButton(
+                onClick = {
+                        selected.value = !selected.value   
+                },
+                enabled = true,
+                modifier = Modifier
+                    .constrainAs(selectButton) {
+                        top.linkTo(parent.top, margin = 0.dp)
+                        end.linkTo(parent.end, margin = 0.dp)
+                    }
+                    .padding(5.dp)
+            ) {
+                Icon(
+                    imageVector = if (selected.value) Icons.Filled.RadioButtonChecked else Icons.Filled.RadioButtonUnchecked,
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(30.dp)
+                )
+            }
+            
+            Text(
+                text = note.message,
+                maxLines = 2,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .constrainAs(content) {
+                        top.linkTo(title.bottom, margin = 10.dp)
+                        start.linkTo(parent.start, margin = 10.dp)
+                        end.linkTo(parent.end, margin = 10.dp)
+                    }
+                    .padding(10.dp)
+            )
+        }
+    }
+
+}
+
 fun toastError(context: Context) {
     Toast.makeText(
         context,
@@ -290,6 +426,10 @@ fun toastError(context: Context) {
 
 private fun getCategoryId(viewModel: MainViewModel, categoryName: String): Long {
     return viewModel.categories.value.first { it.name.lowercase() == categoryName.lowercase() }.categoryId
+}
+
+private fun getCategory(viewModel: MainViewModel, categoryId: Long): Category {
+    return viewModel.categories.value.first { it.categoryId == categoryId }
 }
 
 

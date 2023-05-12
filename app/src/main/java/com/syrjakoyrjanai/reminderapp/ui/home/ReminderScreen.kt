@@ -67,6 +67,7 @@ import com.syrjakoyrjanai.core.domain.entity.Reminder
 import com.syrjakoyrjanai.reminderapp.R
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
+import com.syrjakoyrjanai.reminderapp.ui.note.NoteViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
 import java.time.Instant
@@ -94,7 +95,7 @@ fun Reminders(
                     categories = categories,
                     onCategorySelected = categoryViewModel::onCategorySelected,
                     navigationController = navigationController,
-                    mainViewModel = reminderViewModel
+                    mainViewModel = reminderViewModel,
                 )
             }
         }
@@ -114,7 +115,7 @@ private fun ReminderScreen(
     categories: List<Category>,
     onCategorySelected: (Category) -> Unit,
     navigationController: NavController,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
 ) {
     Scaffold (
 
