@@ -485,7 +485,7 @@ private fun SortMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(0) }
-    val sortOptions = listOf("Default", "Title", "Date", "Past", "Upcoming")
+    val sortOptions = listOf("Default", "Last", "Title", "category")
     val configuration = LocalConfiguration.current
     val dropdown = (configuration.screenWidthDp.dp) - 150.dp
 
