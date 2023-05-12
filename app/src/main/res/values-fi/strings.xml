@@ -53,5 +53,6 @@
 
     <string name="today">Tänään</string>
     <string name="tomorrow">Huomenna</string>
+    <string name="sort">Lajittele</string>
 
 </resources>

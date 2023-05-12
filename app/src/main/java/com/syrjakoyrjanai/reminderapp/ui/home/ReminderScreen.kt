@@ -3,6 +3,7 @@ package com.syrjakoyrjanai.reminderapp.ui.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.Edit
@@ -76,6 +78,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun Reminders(
@@ -145,6 +148,8 @@ private fun ReminderScreen(
                 onCategorySelected = onCategorySelected,
             )
             Spacer(modifier = Modifier.height(20.dp))
+
+            SortMenu()
 
             ReminderList(
                 selectedCategory = selectedCategory,
@@ -504,8 +509,12 @@ private fun ReminderListItem(
                 .padding(10.dp)
         )
 
+        // format the time to be dd.mm.yyyy klo hh:mm
+        val reminderTime = reminder.reminderTime
+        val reminderTimeFormatted = reminderTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy 'klo' HH:mm"))
+        
         Text(
-            text = reminder.reminderTime.toString(),
+            text = reminderTimeFormatted,
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .constrainAs(date) {
@@ -532,6 +541,72 @@ private fun ReminderListItem(
                 modifier = Modifier.size(40.dp),
                 tint = Color(0, 0, 0, 255)
             )
+        }
+    }
+}
+
+
+// small drop down menu for selecting sorting method for reminders¨
+// sort by defaul, title, date, past, upcoming
+// this is fictional, but could be implemented in the future
+@Composable
+private fun SortMenu(
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedIndex by remember { mutableStateOf(0) }
+    val sortOptions = listOf("Default", "Title", "Date", "Past", "Upcoming")
+    val configuration = LocalConfiguration.current
+    val dropdown = (configuration.screenWidthDp.dp) - 150.dp
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { expanded = true })
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = stringResource(R.string.sort),
+                style = MaterialTheme.typography.h6,
+                fontSize = 20.sp
+            )
+            Icon(
+                imageVector = Icons.Rounded.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier.size(40.dp),
+                tint = Color(0, 0, 0, 255)
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { expanded = true })
+                .padding(10.dp)
+                .offset(dropdown,10.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(130.dp)
+                    .offset(10.dp, 0.dp)
+
+            ) {
+                sortOptions.forEachIndexed { index, sort ->
+                    DropdownMenuItem(onClick = {
+                        selectedIndex = index
+                        expanded = false
+                    }) {
+                        Text(
+                            text = sort,
+                            style = MaterialTheme.typography.body1,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+            }
         }
     }
 }

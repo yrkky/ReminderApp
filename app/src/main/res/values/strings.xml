@@ -51,5 +51,6 @@
     <string name="about">about</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="sort">Lajittele</string>
 
 </resources>
