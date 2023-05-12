@@ -147,7 +147,6 @@ private fun ReminderScreen(
                 selectedCategory = selectedCategory!!,
                 onCategorySelected = onCategorySelected,
             )
-            Spacer(modifier = Modifier.height(20.dp))
 
             SortMenu()
 
