@@ -51,4 +51,7 @@
     <string name="help">Tuki</string>
     <string name="about">Tietoa sovelluksesta</string>
 
+    <string name="today">Tänään</string>
+    <string name="tomorrow">Huomenna</string>
+
 </resources>

@@ -69,6 +69,10 @@ import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewModel
 import com.syrjakoyrjanai.reminderapp.ui.category.CategoryViewState
 import com.syrjakoyrjanai.reminderapp.ui.reminder.MainViewModel
 import com.syrjakoyrjanai.reminderapp.ui.reminder.ReminderViewState
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @Composable
 fun Reminders(
@@ -401,15 +405,14 @@ private fun ReminderList(
 
     val reminderViewState by mainViewModel.reminderState.collectAsState()
 
+    var isTodayText_ = false
+    var isTomorrowText_ = false
+    var isUpcomingText_ = false
+
     when (reminderViewState) {
         is ReminderViewState.Loading -> {}
         is ReminderViewState.Success -> {
             val reminderList = (reminderViewState as ReminderViewState.Success).data
-
-            Text(
-                text = stringResource(R.string.upcoming),
-                style = MaterialTheme.typography.h6
-            )
 
             LazyColumn(
                 contentPadding = PaddingValues(0.dp),
@@ -417,14 +420,46 @@ private fun ReminderList(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                items(reminderList) { item ->
 
-                    ReminderListItem(
-                        reminder = item,
-                        navigationController = navigationController,
-                        onClick = { /*TODO*/ },
-                        MainViewModel = mainViewModel
-                    )
+                items(reminderList.sortedBy { it.reminderTime }) { item ->
+
+                    // if there are reminders today add word today above them
+                    if (item.reminderTime.toLocalDate() == LocalDate.now() && !isTodayText_) {
+                        Text(
+                            textAlign = TextAlign.Center,
+                            text = stringResource(R.string.today),
+                            style = MaterialTheme.typography.h6,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                        isTodayText_ = true
+                    }
+                    if (item.reminderTime.toLocalDate() == LocalDate.now().plusDays(1) && !isTomorrowText_) {
+                        Text(
+                            text = stringResource(R.string.tomorrow),
+                            style = MaterialTheme.typography.h6,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(10.dp),
+                        )
+                        isTomorrowText_ = true
+                    }
+                    if (item.reminderTime.toLocalDate() >= LocalDate.now().plusDays(2) && !isUpcomingText_) {
+                        Text(
+                            text = stringResource(R.string.upcoming),
+                            style = MaterialTheme.typography.h6,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                        isUpcomingText_ = true
+                    }
+
+                    if (item.reminderTime.toEpochSecond(ZoneOffset.UTC) > Instant.now().epochSecond) {
+                        ReminderListItem(
+                            reminder = item,
+                            navigationController = navigationController,
+                            onClick = { /*TODO*/ },
+                            MainViewModel = mainViewModel
+                        )
+                    }
                 }
             }
         }
@@ -472,7 +507,9 @@ private fun ReminderListItem(
         )
 
         IconButton(
-            onClick = { MainViewModel.deleteReminder(reminder) },
+            onClick = {
+                MainViewModel.deleteReminder(reminder)
+                      },
             modifier = Modifier
                 .constrainAs(delete) {
                     top.linkTo(parent.top)

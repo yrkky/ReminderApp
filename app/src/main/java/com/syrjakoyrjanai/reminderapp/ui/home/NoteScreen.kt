@@ -210,7 +210,8 @@ fun NoteCardsItem(
             .clickable(onClick = onClick)
             .height(cardHeight),
         shape = RoundedCornerShape(10.dp),
-        elevation = 5.dp
+        elevation = 5.dp,
+        backgroundColor = Color(217,217,217, 255)
     ) {
         Column(
             modifier = Modifier
