@@ -157,7 +157,12 @@ fun NoteCards(
     noteViewModel: NoteViewModel, 
     navigationController: NavController
 ) {
-    noteViewModel.loadNotesFor(selectedCategory)
+
+    if (selectedCategory.name == "All") {
+        noteViewModel.loadAllNotes()
+    } else {
+        noteViewModel.loadNotesFor(selectedCategory)
+    }
 
     val noteViewState by noteViewModel.noteState.collectAsState()
 

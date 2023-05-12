@@ -3,6 +3,9 @@ package com.syrjakoyrjanai.reminderapp.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -119,9 +122,8 @@ fun HomeScreen(
     navigationController: NavController,
     mainViewModel: MainViewModel,
     noteViewModel: NoteViewModel
-){
-    Scaffold (
-
+) {
+    Scaffold(
         topBar = {
             TopBar(
                 navigationController = navigationController
@@ -134,7 +136,7 @@ fun HomeScreen(
             )
 
         }
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -163,7 +165,6 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(10.dp)
             )
-
         }
     }
 }
@@ -174,20 +175,21 @@ private fun SearchBar(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-   var searchText = remember { mutableStateOf("") }
+    var searchText = remember { mutableStateOf("") }
 
-   OutlinedTextField(
-       modifier = Modifier.width(300.dp),
-       value = searchText.value,
-       onValueChange = { text -> searchText.value = text },
-       label = {
-           Text(
-            text = stringResource(R.string.search),
-            textAlign = TextAlign.Center)
-               },
-       singleLine = true,
-       shape = RoundedCornerShape(corner = CornerSize(30.dp)),
-   )
+    OutlinedTextField(
+        modifier = Modifier.width(300.dp),
+        value = searchText.value,
+        onValueChange = { text -> searchText.value = text },
+        label = {
+            Text(
+                text = stringResource(R.string.search),
+                textAlign = TextAlign.Center
+            )
+        },
+        singleLine = true,
+        shape = RoundedCornerShape(corner = CornerSize(30.dp)),
+    )
 }
 
 @Composable
@@ -202,7 +204,7 @@ private fun CategoryTabs(
         edgePadding = 10.dp,
         indicator = emptyTabIndicator,
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = Color(0,0,0,0)
+        backgroundColor = Color(0, 0, 0, 0)
     ) {
         categories.forEachIndexed { index, category ->
             Tab(
@@ -221,6 +223,7 @@ private fun CategoryTabs(
 }
 
 private val emptyTabIndicator: @Composable (List<TabPosition>) -> Unit = {}
+
 @Composable
 private fun ChoiceChipContent(
     text: String,
@@ -229,7 +232,7 @@ private fun ChoiceChipContent(
 ) {
     Surface(
         color = when {
-            selected -> Color(0,0,0,255)
+            selected -> Color(0, 0, 0, 255)
             else -> Color(217, 217, 217, 255)
         },
         contentColor = when {
@@ -356,32 +359,32 @@ private fun popUpMenuButton(
     var expanded by remember { mutableStateOf(false) }
 
     val configuration = LocalConfiguration.current
-    val halfScreenWidth = (configuration.screenWidthDp.dp)/2 - 40.dp
+    val halfScreenWidth = (configuration.screenWidthDp.dp) / 2 - 40.dp
 
     FloatingActionButton(
         onClick = { },
         modifier = Modifier
             .size(90.dp)
             .offset((halfScreenWidth), (-40).dp),
-        backgroundColor = Color(217,217,217, 255),
+        backgroundColor = Color(217, 217, 217, 255),
         elevation = FloatingActionButtonDefaults.elevation(0.dp)
     ) {
     }
 
     FloatingActionButton(
-        contentColor = Color(217,217,217, 255),
+        contentColor = Color(217, 217, 217, 255),
         onClick = { expanded = true },
         modifier = Modifier
             .padding(10.dp)
             .size(70.dp)
             .offset((halfScreenWidth), (-40).dp),
-        backgroundColor = Color(255,255,255, 255)
+        backgroundColor = Color(255, 255, 255, 255)
     ) {
         Icon(
             imageVector = Icons.Rounded.Add,
             contentDescription = null,
             modifier = Modifier.size(100.dp),
-            Color(0,0,0, 255)
+            Color(0, 0, 0, 255)
         )
     }
     Row(
@@ -410,8 +413,12 @@ private fun upcomingReminders(
     selectedCategory: Category,
     mainViewModel: MainViewModel,
     navigationController: NavController
-){
-    mainViewModel.loadRemindersFor(selectedCategory)
+) {
+    if (selectedCategory.name == "All") {
+        mainViewModel.loadAllReminders()
+    } else {
+        mainViewModel.loadRemindersFor(selectedCategory)
+    }
 
     val reminderViewState by mainViewModel.reminderState.collectAsState()
 
@@ -455,14 +462,14 @@ private fun ReminderListItem(
     MainViewModel: MainViewModel
 ) {
     val configuration = LocalConfiguration.current
-    val cardWidth = (configuration.screenWidthDp.dp)/(3.5f)
+    val cardWidth = (configuration.screenWidthDp.dp) / (3.5f)
 
     Card(
         modifier = modifier
             .padding(10.dp)
             .size(cardWidth),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = Color(217,217,217, 255)
+        backgroundColor = Color(217, 217, 217, 255)
     ) {
         Column(
             modifier = Modifier
@@ -490,8 +497,12 @@ private fun importantReminders(
     selectedCategory: Category,
     mainViewModel: MainViewModel,
     navigationController: NavController
-){
-    mainViewModel.loadRemindersFor(selectedCategory)
+) {
+    if (selectedCategory.name == "All") {
+        mainViewModel.loadAllReminders()
+    } else {
+        mainViewModel.loadRemindersFor(selectedCategory)
+    }
 
     val reminderViewState by mainViewModel.reminderState.collectAsState()
 
@@ -535,13 +546,13 @@ private fun importantReminderListItem(
     MainViewModel: MainViewModel
 ) {
     val configuration = LocalConfiguration.current
-    val cardWidth = (configuration.screenWidthDp.dp)/(3.5f)
+    val cardWidth = (configuration.screenWidthDp.dp) / (3.5f)
     Card(
         modifier = modifier
             .padding(10.dp)
             .size(cardWidth),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = Color(217,217,217, 255)
+        backgroundColor = Color(217, 217, 217, 255)
     ) {
         ConstraintLayout(
             modifier = modifier
@@ -567,28 +578,30 @@ private fun importantReminderListItem(
                 maxLines = 1,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.constrainAs(titleRef) {
-                       linkTo(
-                           start = parent.start,
-                           end = parent.end,
-                           startMargin = 0.dp,
-                           endMargin = 4.dp
-                       )
-                    },
+                    linkTo(
+                        start = parent.start,
+                        end = parent.end,
+                        startMargin = 0.dp,
+                        endMargin = 4.dp
+                    )
+                },
                 textAlign = TextAlign.Center
             )
 
             Icon(
                 imageVector = Icons.Rounded.Star,
                 contentDescription = null,
-                modifier = Modifier.size(23.dp).constrainAs(iconRef) {
-                    linkTo(
-                        start = parent.start,
-                        end = parent.end,
-                        startMargin = cardWidth * 0.8f,
-                        endMargin = 0.dp,
-                        bias = 0f
-                    )
-                }
+                modifier = Modifier
+                    .size(23.dp)
+                    .constrainAs(iconRef) {
+                        linkTo(
+                            start = parent.start,
+                            end = parent.end,
+                            startMargin = cardWidth * 0.8f,
+                            endMargin = 0.dp,
+                            bias = 0f
+                        )
+                    }
             )
         }
     }
@@ -615,24 +628,25 @@ private fun quickNoteBox(
         OutlinedTextField(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color(217,217,217, 255))
+                .background(Color(217, 217, 217, 255))
                 .fillMaxWidth()
-                .fillMaxHeight(0.7f).background(Color(217, 217, 217, 255))
-            ,
+                .fillMaxHeight(0.7f)
+                .background(Color(217, 217, 217, 255)),
             value = textbox.value,
             onValueChange = { text -> textbox.value = text },
             label = {
                 Text(
                     text = "",
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center
+                )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(217,217,217, 255),
-                unfocusedBorderColor = Color(217,217,217, 255),
-                focusedLabelColor = Color(0,0,0, 255),
-                unfocusedLabelColor = Color(0,0,0, 255),
-                cursorColor = Color(0,0,0, 255),
-                textColor = Color(0,0,0, 255)
+                focusedBorderColor = Color(217, 217, 217, 255),
+                unfocusedBorderColor = Color(217, 217, 217, 255),
+                focusedLabelColor = Color(0, 0, 0, 255),
+                unfocusedLabelColor = Color(0, 0, 0, 255),
+                cursorColor = Color(0, 0, 0, 255),
+                textColor = Color(0, 0, 0, 255)
             )
         )
     }
