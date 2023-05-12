@@ -25,8 +25,10 @@
     <string name="note_message">Note message</string>
     <string name="note_choose_category">Choose category</string>
     <string name="note_category">Category</string>
+    <string name="note_save_successful">Note saved</string>
 
     <string name="reminder_made">New reminder made!</string>
+    <string name="reminder_save_successful">Reminder saved</string>
     <string name="reminder_will_remind">Will remind %1$s on %2$s</string>
     <string name="reminder_now">You have reminder %1$s</string>
     <string name="reminder_made_fail">Notification failed</string>
@@ -50,6 +52,8 @@
     <string name="about">about</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="sort">Lajittele</string>
+    <string name="sort">Sort</string>
+
+
 
 </resources>

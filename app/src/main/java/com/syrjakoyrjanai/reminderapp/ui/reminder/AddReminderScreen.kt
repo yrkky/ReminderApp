@@ -148,6 +148,7 @@ fun AddReminder(
                                     ),
                                     notify = shouldNotify.value
                                 )
+                                toastSuccess(context)
                                 navigationController.popBackStack()
                             } else {
                                 // Some kind of alert why can't save
@@ -280,6 +281,7 @@ fun AddReminder(
                             ),
                             notify = shouldNotify.value
                         )
+                        toastSuccess(context)
                         navigationController.popBackStack()
                     },
                     modifier = Modifier
@@ -419,6 +421,14 @@ fun toastError(context: Context) {
     Toast.makeText(
         context,
         context.getString(R.string.fill_error),
+        Toast.LENGTH_LONG
+    ).show()
+}
+
+fun toastSuccess(context: Context) {
+    Toast.makeText(
+        context,
+        context.getString(R.string.reminder_save_successful),
         Toast.LENGTH_LONG
     ).show()
 }
