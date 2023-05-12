@@ -362,7 +362,7 @@ private fun popUpMenuButton(
 
     FloatingActionButton(
         contentColor = Color(217,217,217, 255),
-        onClick = { expanded = true },
+        onClick = { navigationController.navigate("addnotes") },
         modifier = Modifier
             .padding(10.dp)
             .size(70.dp)
