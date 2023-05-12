@@ -332,7 +332,7 @@ private fun SearchBar(
         onValueChange = { text -> searchText.value = text },
         label = {
             Text(
-                text = "Search",
+                text = stringResource(R.string.search),
                 textAlign = TextAlign.Center)
         },
         singleLine = true,
