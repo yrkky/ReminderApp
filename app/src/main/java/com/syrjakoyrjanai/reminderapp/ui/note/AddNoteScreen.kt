@@ -130,6 +130,7 @@ fun AddNote(
                                             categoryId = getCategoryId(viewModel, noteCategory.value)
                                         ),
                                     )
+                                    toastSuccess(context)
                                     navigationController.popBackStack()
                             } else {
                                 toastError(context)
@@ -256,6 +257,7 @@ fun AddNote(
                                 categoryId = getCategoryId(viewModel, noteCategory.value)
                             ),
                         )
+                        toastSuccess(context)
                         navigationController.popBackStack()
                     },
                     modifier = Modifier
@@ -286,6 +288,14 @@ fun toastError(context: Context) {
     Toast.makeText(
         context,
         context.getString(R.string.fill_error),
+        Toast.LENGTH_LONG
+    ).show()
+}
+
+fun toastSuccess(context: Context) {
+    Toast.makeText(
+        context,
+        context.getString(R.string.note_save_successful),
         Toast.LENGTH_LONG
     ).show()
 }

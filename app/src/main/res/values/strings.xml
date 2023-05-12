@@ -52,5 +52,8 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="sort">Lajittele</string>
+    <string name="reminder_save_successful">Muistutus tallennettu</string>
+    <string name="note_save_successful">Muistiinpano tallennettu</string>
+    <string name="login_google">Kirjaudu Google-tilillä</string>
 
 </resources>

@@ -82,7 +82,7 @@ fun LandingScreen(
 
             ) {
             SignInButton(
-                text = "Log In with Google",
+                text = stringResource(R.string.login_google),
                 icon = painterResource(id = R.drawable.ic_google_logo),
                 onClick = { navigationController.navigate("home") }
             )
