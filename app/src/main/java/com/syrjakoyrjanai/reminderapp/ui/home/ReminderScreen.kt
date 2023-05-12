@@ -546,9 +546,6 @@ private fun ReminderListItem(
 }
 
 
-// small drop down menu for selecting sorting method for reminders¨
-// sort by defaul, title, date, past, upcoming
-// this is fictional, but could be implemented in the future
 @Composable
 private fun SortMenu(
 ) {
