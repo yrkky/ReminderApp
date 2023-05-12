@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,6 +49,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,6 +63,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.syrjakoyrjanai.core.domain.entity.Category
@@ -139,6 +142,8 @@ private fun NotesScreen(
                 selectedCategory = selectedCategory!!,
                 onCategorySelected = onCategorySelected,
             )
+
+            SortMenu()
 
             NoteCards(
                 selectedCategory = selectedCategory,
@@ -472,5 +477,67 @@ private fun ChoiceChipContent(
             style = MaterialTheme.typography.body2,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
         )
+    }
+}
+
+@Composable
+private fun SortMenu(
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedIndex by remember { mutableStateOf(0) }
+    val sortOptions = listOf("Default", "Title", "Date", "Past", "Upcoming")
+    val configuration = LocalConfiguration.current
+    val dropdown = (configuration.screenWidthDp.dp) - 150.dp
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { expanded = true })
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = stringResource(R.string.sort),
+                style = MaterialTheme.typography.h6,
+                fontSize = 20.sp
+            )
+            Icon(
+                imageVector = Icons.Rounded.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier.size(40.dp),
+                tint = Color(0, 0, 0, 255)
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { expanded = true })
+                .padding(10.dp)
+                .offset(dropdown,10.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(130.dp)
+                    .offset(10.dp, 0.dp)
+
+            ) {
+                sortOptions.forEachIndexed { index, sort ->
+                    DropdownMenuItem(onClick = {
+                        selectedIndex = index
+                        expanded = false
+                    }) {
+                        Text(
+                            text = sort,
+                            style = MaterialTheme.typography.body1,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+            }
+        }
     }
 }
