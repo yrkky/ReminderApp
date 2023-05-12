@@ -343,7 +343,7 @@ private fun BottomBar(
 @Composable
 private fun popUpMenuButton(
     modifier: Modifier = Modifier,
-    navigationController: NavController
+    navigationController: NavController,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -367,7 +367,7 @@ private fun popUpMenuButton(
             .padding(10.dp)
             .size(70.dp)
             .offset((halfScreenWidth), (-40).dp),
-        backgroundColor = Color(255,255,255, 255)
+        backgroundColor = Color(255,255,255, 255),
     ) {
         Icon(
             imageVector = Icons.Rounded.Add,

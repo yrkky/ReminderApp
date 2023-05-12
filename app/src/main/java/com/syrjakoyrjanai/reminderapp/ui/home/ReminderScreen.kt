@@ -51,6 +51,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -59,6 +60,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -397,7 +399,6 @@ private fun ReminderList(
     mainViewModel: MainViewModel,
     navigationController: NavController
 ) {
-
     if (selectedCategory.name == "All") {
         mainViewModel.loadAllReminders()
     } else {
@@ -416,8 +417,9 @@ private fun ReminderList(
             val reminderList = (reminderViewState as ReminderViewState.Success).data
 
             LazyColumn(
-                contentPadding = PaddingValues(0.dp),
+                contentPadding = PaddingValues(10.dp),
                 verticalArrangement = Arrangement.Center,
+                horizontalAlignment =  Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
@@ -427,10 +429,12 @@ private fun ReminderList(
                     // if there are reminders today add word today above them
                     if (item.reminderTime.toLocalDate() == LocalDate.now() && !isTodayText_) {
                         Text(
-                            textAlign = TextAlign.Center,
                             text = stringResource(R.string.today),
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.h6,
-                            modifier = Modifier.padding(10.dp)
+                            fontSize = 25.sp,
+                            modifier = Modifier
+                                .padding(10.dp)
                         )
                         isTodayText_ = true
                     }
@@ -438,8 +442,10 @@ private fun ReminderList(
                         Text(
                             text = stringResource(R.string.tomorrow),
                             style = MaterialTheme.typography.h6,
+                            fontSize = 25.sp,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp),
+                            modifier = Modifier
+                                .padding(10.dp)
                         )
                         isTomorrowText_ = true
                     }
@@ -447,8 +453,10 @@ private fun ReminderList(
                         Text(
                             text = stringResource(R.string.upcoming),
                             style = MaterialTheme.typography.h6,
+                            fontSize = 25.sp,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier
+                                .padding(10.dp)
                         )
                         isUpcomingText_ = true
                     }
@@ -481,7 +489,7 @@ private fun ReminderListItem(
             .clickable(onClick = onClick)
             .padding(10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(217,217,217, 255))
+            .background(Color(217, 217, 217, 255))
     ) {
         val (title, date, time, icon, delete) = createRefs()
 
